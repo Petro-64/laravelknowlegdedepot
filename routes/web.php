@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', 'WelcomeController@index');
+
+
+/*
 Route::get('/', function () {
-    return 'Hello, World';
+    return 'Hello, Blue rabbit Peter!';
 });
+*/
