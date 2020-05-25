@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
 Route::get('/', function () {  return view('home'); });
-Route::get('/about', function () { return view('about'); });
-Route::get('/tests', function () { return view('tests'); });
-Route::get('/contribution', function () { return view('contribution'); });
-
-
-/*
-Route::get('/', function () {
-    return 'Hello, Blue rabbit Peter!';
+Route::group(['middleware' => ['auth']], function(){
+    Route::group(['middleware' => ['admin']], function(){
+        Route::get('/tests', function () { return view('tests'); })->name('tests');
+    });
+    Route::get('/testresults', function () { return view('testresults'); })->name('testresults');
+    
 });
-*/
+Route::get('/about', function () { return view('about'); })->name('about');
+Route::get('/contribution', function () { return view('contribution'); })->name('contribution');
+//Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');

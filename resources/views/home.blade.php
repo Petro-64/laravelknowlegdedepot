@@ -1,11 +1,28 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
 @section('content')
-    <!-- Begin page content -->
-    <main role="main" class="container">
-      <h1 class="mt-5">Free online testing system</h1>
-      <p class="lead">Welcome to our project. This is the homepage</p>
-    </main>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard 1</div>
 
-
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @guest
+                        You are guest
+                        
+                    @else
+                        You are logged in!
+                    @endguest
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

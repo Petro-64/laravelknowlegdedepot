@@ -1,4 +1,4 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
 @section('content')
     <!-- Begin page content -->
