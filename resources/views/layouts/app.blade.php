@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    <script  src="https://code.jquery.com/jquery-3.5.1.min.js"  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="  crossorigin="anonymous"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -33,24 +33,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                    <li class="nav-item active">
                             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('about') }}">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tests') }}">Free online tests</a>
+                            <a class="nav-link" href="{{ route('tests') }}">Free tests</a>
                         </li>
                         @guest
                         @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contribution') }}">Your contribution</a>
+                            <a class="nav-link" href="{{ route('contribution') }}">My contribution</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('testresults') }}">Your test results</a>
+                            <a class="nav-link" href="{{ route('testresults') }}">Test results</a>
                         </li>
+                        @if(Auth::user()->roles[0]->name =='admin')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown06">
+                                <a class="dropdown-item" href="{{ route('subjects') }}">Subjects</a>
+                                <a class="dropdown-item" href="{{ route('questions') }}">Questions</a>
+                            </div>
+                        </li>
+                        @endif
                         @endguest
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -88,10 +95,7 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
 </body>
 </html>

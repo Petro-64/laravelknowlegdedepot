@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleUserTable extends Migration
+class AddIdToTemporaryTestingQuestionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateRoleUserTable extends Migration
      */
     public function up()
     {
-            DB::table('roles')->insert([
-                    'name' => 'user'
-                ]
-            );
+        Schema::table('temporary_testing_questions', function (Blueprint $table) {
+            $table->integer('question_id');
+        });
     }
 
     /**
@@ -26,6 +25,8 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('role_user');
+        Schema::table('temporary_testing_questions', function (Blueprint $table) {
+            $table->dropColumn('question_id');
+        });
     }
 }
