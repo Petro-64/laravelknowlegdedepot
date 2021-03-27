@@ -670,7 +670,7 @@ class ReactController extends Controller
         ]);
                
         if ($validator->fails()) {
-            return response()->json(['payload'=>['success'=>'false',  'message'=>'Check data you send']]);
+            return response()->json(['payload'=>['success'=>'false',  'message'=>'Check data you send']]);// just to try
         }
 
         $userContribution = QuestionContribution::where('id', $request->contibutionid)->first();
