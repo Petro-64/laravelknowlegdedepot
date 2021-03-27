@@ -32,4 +32,6 @@ class CreateFailedJobsTable extends Migration
     {
         Schema::dropIfExists('failed_jobs');
     }
+
+    2021_02_19_000000_create_jobs_table.php
 }

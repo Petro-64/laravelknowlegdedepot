@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard 1</div>
+                <div class="card-header" style="color: green; font-weight: bold">Dashboard<br />sgdgsdfgsdf</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -19,7 +19,6 @@
                     @else
                         You are logged in!
                     @endguest
-                    
                 </div>
             </div>
         </div>

@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Subject;
+use App\Question;
+use App\Answer;
+use App\Http\Resources\Answer as AnswerResource;
+use App\Http\Resources\AnswerCollection as AnswerToQuestionResource;
 
 /*
 |--------------------------------------------------------------------------

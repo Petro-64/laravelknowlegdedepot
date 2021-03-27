@@ -59,15 +59,26 @@
                         <tbody>
                             @foreach ($subjects as $subject)
                                 <tr>
-                                    <!-- Task Name -->
+                                    @php
+                                        if($subject->active == 1){
+                                        $phraze = "active";
+                                        } else {
+                                        $phraze = "unactive";
+                                        }
+                                    @endphp
                                     <td class="table-text">
-                                        <div>{{ $subject->name }}</div>
+                                        <div class="subj-name-unactive">{{ $subject->name }}</div>
+                                        <div class="subj-name-active"><input type="text" class="textfieldSubjectVal" value="{{ $subject->name }}"></div>
                                     </td>
                                     <td class="table-text">
-                                        <div>{{ $subject->active }}</div>
+                                        <div class="deactivateSubject" data-id="{{ $subject->id }}" data-active="{{ $subject->active }}">{{ $phraze }}</div>
                                     </td>
                                     <td class="table-text">
                                         <div>{{ $subject->questions_number }}</div>
+                                    </td>
+                                    <td class="table-text">
+                                        <div class="button-name-unactive"><button type="button" class="btn btn-warning start-success-name" data-id="{{ $subject->id }}">Edit subj name</button></div>
+                                        <div class="button-name-active"><button type="button" class="btn btn-success save-success-name" data-id="{{ $subject->id }}">Save/Cancel</button></div>
                                     </td>
                                     <td>
                                     @if($subject->questions_number == 0)
@@ -87,9 +98,50 @@
                 </div>
             </div>
         @endif
-
+        <form class="hiddenForm">
+        {{ csrf_field() }}
+        
+   </form>
     </div>
-
     <!-- TODO: Current Tasks -->
     </main>
+    <script>
+      $( document ).ready(function() {
+        $(".start-success-name").click(function(){
+            console.log("edit quest clicked");
+            $(this).css("display", "none");
+            $(this).parent().parent().parent().find(".subj-name-unactive").css("display", "none");
+            $(this).parent().parent().parent().find(".subj-name-active").css("display", "block");
+            $(this).parent().parent().find(".button-name-active").css("display", "block");
+        })
+
+        $(".save-success-name").on("click", function(){
+            var subjectValue = $(this).parent().parent().parent().find(".textfieldSubjectVal").val();
+            var subjectIdValue = $(this).attr("data-id");
+            var tokenValue = $(".hiddenForm input").val();
+            var jqxhr = $.post( "/api/savesubject", {_token: tokenValue, subjectIdValue: subjectIdValue, subjectValue: subjectValue})
+                .done(function(data) {
+                    location.reload();
+                })
+                .fail(function() {
+                    alert("Network error, please try again later");
+                });
+        })
+
+        $(".deactivateSubject").on("click", function(){
+            var subjectIdValue = $(this).attr("data-id");
+            var subjectActiveValue = $(this).attr("data-active");
+            var tokenValue = $(".hiddenForm input").val();
+            console.log("tokenValue = ", tokenValue);
+            console.log("subjectIdValue = ", subjectIdValue);
+            var jqxhr = $.post( "/api/savesubjectactive", {_token: tokenValue, subjectIdValue: subjectIdValue, subjectActiveValue: subjectActiveValue})
+                .done(function(data) {
+                    location.reload();
+                })
+                .fail(function() {
+                    alert("Network error, please try again later");
+                });
+        })
+      })
+    </script>
 @endsection

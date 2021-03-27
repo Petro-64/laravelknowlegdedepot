@@ -11,7 +11,22 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
+    //these are react api related URLs
     protected $except = [
-        //
+        '/react/login',
+        '/react/addsubjects',
+        '/react/editsubjects',
+        '/react/deletesubjects/*',
+        '/react/deleteusers/*',
+        '/react/signup',
+        '/react/testing',
+        '/react/startTesting',
+        '/react/processTesting',
+        '/react/changepassword',
+        '/react/forgotpassword',
+        '/react/resetpassword',
+        '/react/addmycontribution',
+        '/react/approvecontributionitemadmin',
+        '/react/declinecontributionitemadmin'
     ];
 }

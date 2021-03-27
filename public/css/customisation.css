@@ -1,0 +1,101 @@
+#questionsEditTable{
+    width: 100%;
+}
+
+#questionsEditTable tr:hover{
+    background-color: lightblue;
+}
+
+#editForm{
+    display: none;
+    margin-top: 20px;
+}
+
+.questionWrapper{
+    margin-top: 20px;
+}
+
+.questionWrapper textarea{
+    width: 900px;
+}
+
+#editForm table tr td {
+    width: 25%;
+    padding: 20px;
+    vertical-align: top;
+}
+
+#editForm button {
+    margin-right: 20px;
+}
+
+#editForm table {
+    margin-top: 20px;
+}
+
+#editForm table tr td.correct{
+    background-color: lightgreen;
+}
+
+#editForm table tr td.uncorrect {
+    background-color: lightpink !important;
+}
+thead {
+    font-weight: bold;
+}
+
+.hiddenForm{
+    display: none;
+}
+
+td.controlActivness{
+    cursor: pointer;
+}
+
+.errorWrapper{
+    font-size: 20px;
+    padding-top: 20px;
+    color: red;
+}
+
+.answerVersion {
+    padding: 20px;
+    background-color: #d8ecea;
+    cursor: pointer;
+    margin: 20px 20px 20px 0;
+}
+
+tr.white{
+    background-color: #fff;
+}
+
+tr.grey{
+    background-color: #bbacac;
+}
+
+.subj-name-active{
+    display: none;
+}
+
+.button-name-active{
+    display: none;
+}
+.deactivateSubject{
+    cursor: pointer;
+}
+.clickBlocker {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.3);
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    display: none;
+}
+
+.clickBlocker img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);;
+}

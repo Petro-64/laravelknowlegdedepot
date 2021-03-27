@@ -5,6 +5,8 @@ use App\Subject;
 use App\Question;
 use App\Answer;
 use Illuminate\Http\Request;
+use App\Http\Resources\Answer as AnswerResource;
+use App\Http\Resources\AnswerCollection as AnswerToQuestionResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +20,67 @@ use Illuminate\Http\Request;
 */
 
 Auth::routes();
+Route::get('/corransw/{id}', 'TestsOneController@getCorrectAnswer');//need to have correct answer id to be able to show correcta answer after user clicked on answer
 Route::get('/', function () {  return view('home'); });
 Route::get('/contribution', function () { return view('contribution'); })->name('contribution');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/tests', 'TestsController@index')->name('tests');
-Route::get('/tests/{id}','TestsController@showsubject');
-Route::get('/testing','TestsController@testing');
-Route::get('/testing/{id?}','TestsController@testing');
+Route::get('/tests', 'TestsOneController@index')->name('tests');
+Route::get('/tests/{id}','TestsOneController@showsubject');
+Route::get('/testing','TestsOneController@testing');
+Route::get('/testing/{id?}','TestsOneController@testing');
+Route::get('/verifyemailaddress/{token?}', 'ServiceController@verifyemail');
+Route::get('/passwordreset/{token?}', 'ServiceController@passwordreset');
+
+//react part of application starts
+Route::get('/app','SpaController@index')->name('reacthome');
+Route::get('/app/login','SpaController@index');
+Route::get('/app/register','SpaController@index');
+Route::get('/app/test','SpaController@index');
+Route::get('/app/users','SpaController@index');
+//react part of application ends
+
+//react related public api starts
+Route::get('/react/getglobalsettings','ReactController@getglobalsettings');
+Route::get('/react/subjects','ReactController@getsubjectsuser');
+Route::post('/react/login','ReactController@login');// needed to disable scrf token in app\Http\Middleware\VerifyCsrfToken.php
+Route::post('/react/signup','ReactController@signup');
+Route::post('/react/forgotpassword','ReactController@forgotpassword'); 
+Route::post('react/startTesting','ReactController@startTesting');
+Route::post('/react/processTesting','ReactController@processTesting'); 
+Route::post('/react/resetpassword','ReactController@resetpassword');
+//react related user api starts
+Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
+    Route::get('/react/results','ReactController@getresults');
+    Route::get('/react/emailconfirm/{id}','ReactController@getresults');
+    Route::get('/react/cookieconsent/{id}','ReactController@cookieconsent');
+    Route::post('/react/changepassword','ReactController@changepassword');
+    Route::post('/react/addmycontribution','ReactController@addmycontribution');
+    Route::get('/react/getcontributionuser','ReactController@getcontributionuser');
+    Route::get('/react/getcontributionitemuser/{id}','ReactController@getcontributionitemuser');
+    Route::get('/react/resendemailconfirmation/{id}','ReactController@resendemailconfirmation');
+    //react related admin api starts
+    Route::group(['middleware' => ['ifJwTokenAdmin']], function(){
+        Route::get('/react/subjectsadmin','ReactController@getsubjectsadmin');
+        Route::get('/react/users','ReactController@users'); 
+        Route::get('/react/getcontributionadmin','ReactController@getcontributionadmin');
+        Route::get('/react/getcontributionitemadmin/{id}','ReactController@getcontributionitemadmin');
+        Route::post('/react/approvecontributionitemadmin','ReactController@approvecontributionitemadmin');
+        Route::post('/react/declinecontributionitemadmin','ReactController@declinecontributionitemadmin');
+        Route::get('/react/togglesubjectactivity/{id}','ReactController@togglesubjectactivity');
+        Route::get('/react/toggleemailconfirmation','ReactController@toggleemailconfirmation'); 
+        Route::get('/react/toggletogglerecaptcha','ReactController@togglerecaptcha'); 
+        Route::get('/react/toggleuserconfirm/{id}','ReactController@toggleuserconfirm');
+        Route::get('/react/toggleusersuspended/{id}/{reasonSuspension?}','ReactController@toggleusersuspended');
+        Route::post('/react/addsubjects','ReactController@addsubjects');
+        Route::post('/react/editsubjects','ReactController@editsubjects');
+        Route::delete('/react/deletesubjects/{id}','ReactController@deletesubjects');
+        Route::delete('/react/deleteusers/{id}','ReactController@deleteusers');
+        ///!!! don't forget to ecluse all react post delete put from scrf token protection here: app\Http\Middleware\VerifyCsrfToken.php
+    });
+}); 
+//react related public api ends
+
+
 Route::group(['middleware' => ['auth']], function(){
     Route::group(['middleware' => ['admin']], function(){
         Route::get('/subjects', function () { $subjects = Subject::orderBy('created_at', 'asc')->get();  return view('subjects', ['subjects' => $subjects]); })->name('subjects');
@@ -96,13 +152,57 @@ Route::group(['middleware' => ['auth']], function(){
                     $answer->save();
                 }
             }
+            //////need to count answers and save it  to subjects table here
+            $subjects = Subject::orderBy('created_at', 'asc')->get();
+            foreach ($subjects as $subject) {
+                $subjId = $subject->id;
+                $count = Question::where('subject_id','=', $subjId)->count();
+
+                $subject = Subject::find($subjId);
+                $subject->questions_number = $count;
+                $subject->save();
+            }
             return redirect('/questions/'.$subjectId)->with('success', 'Question added!');
         });
-
+        Route::post('/api/answerquestionedit', 'QuestionsController@editQuestion');
+        Route::post('/api/saveanswer', 'QuestionsController@saveAnswer');
+        Route::post('/api/savesubject', 'QuestionsController@saveSubject');
+        Route::post('/api/savesubjectactive', 'QuestionsController@saveSubjectActive');
+        Route::post('/api/activequestionedit', 'QuestionsController@editActiveQuestion');
+        Route::post('api/activequestioneditbyid', 'QuestionsController@editActiveQuestionByid');
         Route::delete('/subject/{id}', function ($id) {  Subject::findOrFail($id)->delete(); return redirect('/subjects'); });
         Route::get('/questions/{id}', 'QuestionsController@showsubject');
         Route::get('/questions', 'QuestionsController@index')->name('questions');
+        //Route::get('/questions_edit', 'QuestionsController@abc')->name('questions_edit');
+        Route::get('/questions_edit', function(){ $subjects = Subject::orderBy('created_at', 'asc')->get(); return view('questions_edit', ['subjects' => $subjects]);})->name('questions_edit');
+        //Route::get('/questions_edit/{id}/{act?}', 'QuestionsController@showsubjectedit');
+        Route::get('/questions_edit/{id}/{act?}', function($id, $act=1){
+            $subjects = Subject::orderBy('created_at', 'asc')->get();
+            switch ($act) {
+                case 1:
+                    $givenSubjectAllQuestions = Question::where('subject_id', $id)->paginate(15);//////////////////////////////////////////////////pagination
+                    break;
+                case 2:
+                    $givenSubjectAllQuestions = Question::where('subject_id', $id)->where('active', 1)->paginate(15);
+                    break;
+                case 3:
+                    $givenSubjectAllQuestions = Question::where('subject_id', $id)->where('active', 0)->paginate(15);
+                    break;
+                default :
+                    $givenSubjectAllQuestions = Question::where('subject_id', $id)->paginate(15);
+            }
+            
+            return view('questions_edit', ['subjects' => $subjects, 'id' => $id, 'questions' => $givenSubjectAllQuestions, 'act' => $act]);
+        });
+        Route::get('/questions_upload', 'QuestionsController@questionsUpload')->name('questions_upload');///this is for transforming questions from older versions
+        Route::get('/api/answer/{id?}', function ($id = 1) {//returns answer with sertain id
+            return new AnswerResource(Answer::find($id));
+        });
+        Route::get('/api/answerstoquestion/{id?}', function ($id = 1) {//returns answers to sertain question id
+            return new AnswerToQuestionResource(Answer::where('question_id', $id)->get());
+        });
     });
-    Route::get('/testresults', function () { return view('testresults'); })->name('testresults');
+    Route::get('/testresults/{id?}/{timingId?}/{itemsId?}/{daysId?}', 'ResultsController@index')->name('testresults');
 });
+
 

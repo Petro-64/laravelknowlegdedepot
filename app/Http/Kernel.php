@@ -34,7 +34,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,/// disabled because needed to pass POSt request from react from localhost:3000, only for development mode
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -63,5 +63,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\CheckAdmin::class,
+        'ifJwTokenRoleExists' => \App\Http\Middleware\CheckJwtToken::class,
+        'ifJwTokenAdmin' => \App\Http\Middleware\CheckJwtAdmin::class,
     ];
 }

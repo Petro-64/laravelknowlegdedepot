@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\MemcachedModels;
 
-class Subject extends Model
+class Subject extends MemcachedModels
 {
 
     /**/

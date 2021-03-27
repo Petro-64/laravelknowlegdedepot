@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/customisation.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -36,23 +37,27 @@
                     <li class="nav-item active">
                             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tests') }}">Free tests</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tests</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown05">
+                                <a class="dropdown-item" href="{{ route('tests') }}">Free tests</a>
+                                @guest
+                                @else
+                                <a class="dropdown-item" href="{{ route('contribution') }}">My contribution
+                                <a class="dropdown-item" href="{{ route('testresults') }}">Test results</a>
+                                @endguest
+                            </div>
                         </li>
                         @guest
                         @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contribution') }}">My contribution</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('testresults') }}">Test results</a>
-                        </li>
                         @if(Auth::user()->roles[0]->name =='admin')
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown06">
                                 <a class="dropdown-item" href="{{ route('subjects') }}">Subjects</a>
-                                <a class="dropdown-item" href="{{ route('questions') }}">Questions</a>
+                                <a class="dropdown-item" href="{{ route('questions') }}">Add questions</a>
+                                <a class="dropdown-item" href="{{ route('questions_edit') }}">Edit questions</a>
+                                <!--<a class="dropdown-item" href="{{ route('questions_upload') }}">Upload questions from text file</a>-->
                             </div>
                         </li>
                         @endif
