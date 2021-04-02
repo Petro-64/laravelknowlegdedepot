@@ -1,12 +1,13 @@
+
+
 <?php $__env->startSection('content'); ?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header" style="color: green; font-weight: bold">Dashboard 1111<br />sgdgsdfgsdf</div>
+                <div class="card-header" style="color: green; font-weight: bold">Dashboard<br />sgdgsdfgsdf</div>
 
                 <div class="card-body">
-                dfghdfghdfg dfgh dfghdfghdfh<br />asdfasdfasdfasdefas<br />asdfasdf<br />asdfasdfsdf<br />
                     <?php if(session('status')): ?>
                         <div class="alert alert-success" role="alert">
                             <?php echo e(session('status')); ?>
@@ -19,7 +20,6 @@
                     <?php else: ?>
                         You are logged in!
                     <?php endif; ?>
-                    
                 </div>
             </div>
         </div>
