@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header" style="color: green; font-weight: bold">Dashboard</div>
+                <div class="card-header" style="color: green; font-weight: bold">Dashboard<br/>change from Mac</div>
 
                 <div class="card-body">
                     @if (session('status'))
