@@ -9,7 +9,7 @@
         <title>Test your knowledge</title>
         <!-- Styles -->
         <link type="text/css" href="{{ asset('static/css/2.7693b373.chunk.css') }}" rel="stylesheet">
-        <link type="text/css" href="{{ asset('static/css/main.3300709c.chunk.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('static/css/main.d8e1a461.chunk.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </head>
@@ -18,7 +18,7 @@
             @yield('content')
         </div>
         <script src="{{ asset('static/js/2.c4d34e8e.chunk.js') }}"></script>
-        <script src="{{ asset('static/js/main.db3e3b45.chunk.js') }}"></script>
+        <script src="{{ asset('static/js/main.ce56ab40.chunk.js') }}"></script>
         <script src="{{ asset('static/js/runtime-main.27fa4a51.js') }}"></script>
 
         <!-- added this start-->
