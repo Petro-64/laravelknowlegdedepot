@@ -1,0 +1,11 @@
+1) Change password for m validation messages aren't translated
+2) My contribution -> question status need to see status of particular question
+3) Check if "Quizz" is more proper word than "Test"
+4) If no results, show proper message instead what we see at the moment
+5) When footer link clicked, need to scroll page to the top
+6) Edit questions in Laravel no way to add question # 4 if we have only 3 or 2
+7) Saga to try
+8) React hooks
+9) Carousel on home page react
+10) Material UI
+11) Unit testing in LaravelNester routes
