@@ -18,7 +18,7 @@
             @yield('content')
         </div>
         <script src="{{ asset('static/js/2.c4d34e8e.chunk.js') }}"></script>
-        <script src="{{ asset('static/js/main.557cf2f1.chunk.js') }}"></script>
+        <script src="{{ asset('static/js/main.8acbda51.chunk.js') }}"></script>
         <script src="{{ asset('static/js/runtime-main.27fa4a51.js') }}"></script>
 
         <!-- added this start-->
