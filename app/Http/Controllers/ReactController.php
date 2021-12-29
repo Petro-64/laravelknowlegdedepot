@@ -120,23 +120,6 @@ class ReactController extends Controller
         }
     }
 
-    public function addsubjects(Request $request){
-        $validator = Validator::make($request->all(), [
-            'subject' => 'required|max:25',
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json(['payload'=>['success'=>'false', 'message'=>'Subject field is required']]);
-        }
-        
-        $subject = new Subject;
-        $subject->name = $request->subject;
-        $subject->active = 1;
-        $subject->questions_number = 0;
-        $subject->save();
-        return response()->json(['payload'=>['success'=>'true']]);
-    }
-
     public function startTesting(Request $request){
         if($request->testingSessionId == ''){
             $hashedTestingSession = Str::random();
@@ -244,18 +227,6 @@ class ReactController extends Controller
         return response()->json(['payload'=>['success'=>'true']]);
     }
 
-    public function togglesubjectactivity($id){
-        $subject = Subject::find($id);
-        if($subject->active == 0){
-            $active = 1;
-        } else {
-            $active = 0;
-        }
-        $subject->active = $active;
-        $subject->save();
-        return response()->json(['payload'=>['success'=>'true']]);
-    }
-
     public function getglobalsettings(){
         $emailConfirmation = Settings::where('id', 1)->pluck('email_confirmation')->first();
         $signupRecaptcha = Settings::where('id', 1)->pluck('signup_recaptcha')->first();
@@ -304,6 +275,192 @@ class ReactController extends Controller
             
         }
         return response()->json(['payload'=>['success'=>'true',  'message'=>'Can\'t find this user, check his id']]);
+    }
+
+    public function addsubjects(Request $request){
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required|max:25',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Subject field is required']]);
+        }
+        
+        $subject = new Subject;
+        $subject->name = $request->subject;
+        $subject->active = 1;
+        $subject->questions_number = 0;
+        $subject->save();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+    public function addmycontribution(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'question' => 'required|max:1000',
+            'firstAnswer' => 'required|max:1000',
+            'secondAnswer' => 'required|max:1000',
+            'thirdAnswer' => 'required|max:1000',
+            'fourthAnswer' => 'required|max:1000',
+            'subjectId' => 'required',
+        ]);
+               
+        if ($validator->fails()) {
+            return response()->json(['payload'=>['success'=>'false',  'message'=>'Check data you send']]);
+        }
+
+        $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
+
+        $question = new QuestionContribution;
+        $question->subject_id = $request->subjectId;
+        $question->user_id = $parseResult['user_id'];
+        $question->name = $request->question;
+        $question->active = 0;
+        $question->approved = 0;
+        $savingSuccess = $question->save();
+        $questionId = $question->id;
+        if($savingSuccess){
+            $answersArray = array($request->firstAnswer, $request->secondAnswer, $request->thirdAnswer, $request->fourthAnswer);
+            foreach ($answersArray as $key => $value) {
+                $answer = new AnswerContribution;
+                $answer->question_id = $questionId;
+                $answer->name = $value;
+                $answer->active = 1;
+                if($key < 3){
+                    $answer->correct = 0;
+                } else {
+                    $answer->correct = 1;
+                }
+                $answer->save();
+            }
+        }
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+    public function questions($id = 1, $status = 1){
+        switch ( $status ) {
+            case 1:
+                $rawString = 'questions.active IN (0,1)';
+                break;
+            case 2:
+                $rawString = 'questions.active IN (1)';
+                break;
+            case 3:
+                $rawString = 'questions.active IN (0)';
+                break;
+            default:
+                $rawString = 'questions.active IN (0,1)';
+        }
+
+        $questions = DB::table('questions')
+        ->select(DB::raw('questions.id as id, questions.name as name, questions.active as active, questions.created_at as created_at'))
+        ->where('questions.subject_id', '=', $id)
+        ->whereRaw($rawString)
+        ->orderBy('questions.id', 'asc')
+        ->get();
+        return response()->json(['payload'=>['success'=>'true', 'subjectId'=>$id, 'questions'=>$questions]]);
+    }
+
+    public function answers($id){
+        if(!isset($id)){
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Question id is required and is numeric']]);
+        }
+
+        $answersToShow = Answer::select('name','id', 'correct')->where('question_id', $id)->orderBy('correct', 'asc')->get()->toArray();
+
+        return response()->json(['payload'=>['success'=>'true', 'answers' => $answersToShow]]);
+    }
+
+    public function togglesubjectactivity($id){
+        $subject = Subject::find($id);
+        if($subject->active == 0){
+            $active = 1;
+        } else {
+            $active = 0;
+        }
+        $subject->active = $active;
+        $subject->save();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+    public function togglequestionactivity($id){
+        if(!isset($id)){
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Question id is required and is numeric']]);
+        }
+
+        $question = Question::find($id);
+        if(!isset($question)){
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Cant find question by this id']]);
+        }
+
+        if($question->active == 0){
+            $active = 1;
+        } else {
+            $active = 0;
+        }
+
+        $question->active = $active;
+        $question->save();
+
+        return response()->json(['payload'=>['success'=>'true', 'questionId'=>$id]]);
+    }
+
+    public function addquestion(Request $request){
+        $validator = Validator::make($request->all(), [
+            'subjectId' => 'required|max:4',
+            'question' => 'required|max:1000',
+            'firstAnswer' => 'required|max:1000',
+            'secondAnswer' => 'required|max:1000',
+            'thirdAnswer' => 'required|max:1000',
+            'fourthAnswer' => 'required|max:1000',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Questions and answers are is required']]);
+        }
+        
+        DB::beginTransaction();
+
+        $question = new Question;
+        $question->subject_id = $request->subjectId;  
+        $token = $request->header('JWToken');
+        $parseResult = ParseJWToken::doParse($token);
+        $question->user_id = $parseResult['user_id'];
+        $question->name = $request->question;
+        $question->active = 1;
+        $question->approved = 1;
+        $savingSuccess = $question->save();
+        $questionId = $question->id;
+        /////////////////////////// fourth question is always correct ////////////////////////////
+        if($savingSuccess){
+            $answersArray = array($request->firstAnswer, $request->secondAnswer, $request->thirdAnswer, $request->fourthAnswer);
+            foreach ($answersArray as $key => $value) {
+                $answer = new Answer;
+                $answer->question_id = $questionId;
+                $answer->name = $value;
+                $answer->active = 1;
+                if($key < 3){
+                    $answer->correct = 0;
+                } else {
+                    $answer->correct = 1;
+                }
+                $answer->save();
+            }
+        }
+        
+        // to update subjects table
+        $subjects = Subject::orderBy('created_at', 'asc')->get();
+        foreach ($subjects as $subject) {
+            $subjId = $subject->id;
+            $count = Question::where('subject_id','=', $subjId)->count();
+
+            $subject = Subject::find($subjId);
+            $subject->questions_number = $count;
+            $subject->save();
+        }
+
+        DB::commit();// transaction ended
+
+        return response()->json(['payload'=>['success'=>'true']]);
     }
 
     public function toggleuserconfirm($id){
@@ -483,48 +640,6 @@ class ReactController extends Controller
         return response()->json(['data'=>['success'=>'true', 'id'=>$data->id, 'name'=>$request->name, 'role_id'=>$defaultRoleId, 'cookie_consent_given'=>0, 'jwt_token'=>$jwt]]);
     }
 
-    public function addmycontribution(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'question' => 'required|max:1000',
-            'firstAnswer' => 'required|max:1000',
-            'secondAnswer' => 'required|max:1000',
-            'thirdAnswer' => 'required|max:1000',
-            'fourthAnswer' => 'required|max:1000',
-            'subjectId' => 'required',
-        ]);
-               
-        if ($validator->fails()) {
-            return response()->json(['payload'=>['success'=>'false',  'message'=>'Check data you send']]);
-        }
-
-        $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
-
-        $question = new QuestionContribution;
-        $question->subject_id = $request->subjectId;
-        $question->user_id = $parseResult['user_id'];
-        $question->name = $request->question;
-        $question->active = 0;
-        $question->approved = 0;
-        $savingSuccess = $question->save();
-        $questionId = $question->id;
-        if($savingSuccess){
-            $answersArray = array($request->firstAnswer, $request->secondAnswer, $request->thirdAnswer, $request->fourthAnswer);
-            foreach ($answersArray as $key => $value) {
-                $answer = new AnswerContribution;
-                $answer->question_id = $questionId;
-                $answer->name = $value;
-                $answer->active = 1;
-                if($key < 3){
-                    $answer->correct = 0;
-                } else {
-                    $answer->correct = 1;
-                }
-                $answer->save();
-            }
-        }
-        return response()->json(['payload'=>['success'=>'true']]);
-    }
-
     public function getcontributionadmin(){/// gets all contribution of all user no filter
         $contribution = DB::table('questions_contribution')
         ->join('users', 'questions_contribution.user_id', '=', 'users.id')
@@ -599,6 +714,8 @@ class ReactController extends Controller
         $question = $questionContribution->name;
         $subjectId = $questionContribution->subject_id;
         $userId = $questionContribution->user_id;
+        $questionStatus = $questionContribution->approved;
+        $createdAt = substr($questionContribution->created_at, 0, 11);
         $uncorrectIterator = 0;
         foreach ($answersContribution as $value) {
             if($value['correct'] == 0){
@@ -610,7 +727,8 @@ class ReactController extends Controller
             };
         }
         return response()->json(['payload'=>['success'=>'true', 'content' => 
-        ['question' => $question, 'subjectId' => $subjectId, 'userId' => $userId, 'contibutionid' => $id, 'answerCorrect' => $answerCorrect, 'uncorrect0' => $uncorrect0, 'uncorrect1' => $uncorrect1, 'uncorrect2' => $uncorrect2]]]);
+        ['question' => $question, 'subjectId' => $subjectId, 'userId' => $userId, 'contibutionid' => $id, 
+          'answerCorrect' => $answerCorrect, 'uncorrect0' => $uncorrect0, 'uncorrect1' => $uncorrect1, 'uncorrect2' => $uncorrect2, 'questionStatus' => $questionStatus, 'createdAt' => $createdAt]]]);
     }
 
 

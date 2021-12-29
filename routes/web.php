@@ -67,12 +67,16 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
         Route::post('/react/approvecontributionitemadmin','ReactController@approvecontributionitemadmin');
         Route::post('/react/declinecontributionitemadmin','ReactController@declinecontributionitemadmin');
         Route::get('/react/togglesubjectactivity/{id}','ReactController@togglesubjectactivity');
+        Route::get('/react/questions/{id}/{status}','ReactController@questions');
+        Route::get('/react/answers/{id}','ReactController@answers');
+        Route::get('/react/togglequestionactivity/{id}','ReactController@togglequestionactivity');
         Route::get('/react/toggleemailconfirmation','ReactController@toggleemailconfirmation'); 
         Route::get('/react/toggletogglerecaptcha','ReactController@togglerecaptcha'); 
         Route::get('/react/toggleuserconfirm/{id}','ReactController@toggleuserconfirm');
         Route::get('/react/toggleusersuspended/{id}/{reasonSuspension?}','ReactController@toggleusersuspended');
         Route::post('/react/addsubjects','ReactController@addsubjects');
         Route::post('/react/editsubjects','ReactController@editsubjects');
+        Route::post('/react/addquestion','ReactController@addquestion');
         Route::delete('/react/deletesubjects/{id}','ReactController@deletesubjects');
         Route::delete('/react/deleteusers/{id}','ReactController@deleteusers');
         ///!!! don't forget to ecluse all react post delete put from scrf token protection here: app\Http\Middleware\VerifyCsrfToken.php

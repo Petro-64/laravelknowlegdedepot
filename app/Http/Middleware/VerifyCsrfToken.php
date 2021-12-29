@@ -27,6 +27,10 @@ class VerifyCsrfToken extends Middleware
         '/react/resetpassword',
         '/react/addmycontribution',
         '/react/approvecontributionitemadmin',
-        '/react/declinecontributionitemadmin'
+        '/react/declinecontributionitemadmin',
+        '/react/addquestion',
+        '/react/questions/*',
+        '/react/togglequestionactivity/*',
+        '/react/answers/*'
     ];
 }
