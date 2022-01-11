@@ -1,12 +1,7 @@
-1) ////Change password form validation messages aren't translated/////  Done 22/12/21
-1a) ///Submit button active even if there are some errors on Change password  form ///// Done 22/12/21
-2)/// My contribution -> question status need to see status of particular question. When you are on "My added question details" page, need to see this particular question status ///// Done 23/12/21
-2a) ////My contribution -> question status need to see when particular question is added. When you are on "My added question details" page, need to see this particular question adding date ///// Done 23/12/21
 3) Check if "Quizz" is more proper word than "Test"
-4) If no results, show proper message instead what we see at the moment
 5) When footer link clicked, need to scroll page to the top
-6) Edit questions in Laravel no way to add question # 4 if we have only 3 or 2
-7) Saga to try
+6) Edit questions in Laravel no way to add question # 4 if we have only 3 or 2  ////fixed for React part, Laravel part will retire
+7) Saga to try (for example for "questions by users functionality" or "user feedback")
 8) React hooks
 9) Carousel on home page react with subjects icons auto rotating.
 10) Material UI
@@ -14,26 +9,21 @@
 12) Cookie "details" link at the bottom of the page  doesn't show cookie page, just empty screen...
 12b) Cookie popup showing logic isn't clear.....
 12a) ///// Cookie popup bottom panel design need to be fixed (for desktop width != 100%, gaps on both sides) ///// Done 22/12/21
-13) //// Статус добавленных мной вопросов not translated into Russian (Contribute -> My contribution status) ///// Done 22/12/21
 13) Dark grey Footer looks weird on page (Contribute -> My contribution status)
 14) Need to add feature for admin to be able to see particular user contribution (filter by user)
-15) ////when adding my contribution, need to block "Submit" button when form is not completed, not valid  ////done 25-12-21
-16) /// On "Test" page for registered users need to remove "If you woul'd like to have an......... we'll ask you to register here" part of the paragraph  ////Done 23-12-21
 17) Even if user is suspended, he is able to do testing untill next logout - login. 
 18) //// When suspended user logging in, "Network error" alert appears  ////fixed 23-12-21//////
 18) //// When suspended user logging in, he is still has "Test, Settings" and "Test  results" links at the botton navigation   ////fixed 23-12-21//////
 19) Flash notification pop up position is not properly centered 
 20) Need to ensure that for suspended users ( roleId = 4 )  all ajax requests are blocked on backend and frontend level
-21) Need to recreate all admin questions functionality for React version (create, edit, delete), need to ensure we have only full 4 answers, not 3 or 2!!!
 22) Admin - global settings page itself not translated and no top gap
 23) On Test page when selected subject "Current subject: HTML" message appears above select, but when deselect subject, ugly "Current subject:" messaage still visible
-24) when testing, time remaining indicator is confusing, looks like text with blue bgr, need to consider smth else (say, pie diagram...)
 25) On "Admin - add" question question field characters counter jumps from right to bottom when count > 99
-26) //// On user - make contribution need to disable send button if form isn't valid ///done 25-12-21
 27) Most of the flash messages aren't translated
-28) Need to have some visual event, break when new question is being shown to user while on "Testing" page, kinda to show "hey, there is new question", because now it's seamless and confusinbg, or to show flash message each time....
 29) "Test" results and "Question-Answers" tables to add "Zebra" design
-30) for complex AJAX call (ex. results or questions) may be to put semitransparent overlay and spinner?
 31) Test results page behaves weird, filter by subject doesn't work properly, last subject checkbox filter gives weird results (later reloaded page and it works properly... :-(  )
-32) /// On results Page blue pagination rectangle sits on top of footer when scrolling, probably need to fix z-index?////done 27-12-21
 33) To go through all React controller methods and check if proper validation existst for each methods 
+38) When stop testing by pressing red button, popup appears with russian phrase even for english as current lang.
+40) Add "Add feedback button" and feedback storing functionality.
+42) Need to think about security, because we allow uesr to upload html and php code, which is very unsecure...
+    a) To show questions/answers on PHP generated image instead of textareas?

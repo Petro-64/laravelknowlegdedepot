@@ -51,7 +51,16 @@ class ReactController extends Controller
     }
 
     public function getsubjectsuser(){
-        $subjects = Subject::where('active', 1)->where('questions_number', '!=', 0)->orderBy('created_at', 'asc')->get(); 
+        //$subjects = Subject::where('active', 1)->where('questions_number', '!=', 0)->orderBy('created_at', 'asc')->get(); 
+ 
+          $subjects = DB::table('subjects')
+        ->leftjoin('questions', 'questions.subject_id', '=', 'subjects.id')
+        ->select(DB::raw('subjects.id as id, subjects.name as name, subjects.active as active, subjects.created_at as created_at, subjects.updated_at as updated_at, COUNT(subjects.name) as questions_number'))
+        ->groupBy(DB::raw("subjects.id"))
+        ->where('questions.active', '=', 1)
+        ->where('subjects.active', '=', 1)
+        ->get();
+
         //$this->memcache->set(self::subjectsUserKey, $subjects, self::memcachedTimeout);
         return response()->json(['payload'=>['success'=>'true', 'subjects'=>$subjects]]);
         //return $this->userMemcachedModels->getSubjectsUser();
@@ -64,8 +73,46 @@ class ReactController extends Controller
         //return $this->adminMemcachedModels->getSubjectsAdmin();
     }
 
+    public function editsubjects(Request $request ){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:25',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Subject field is required']]);
+        }
+        $subject = Subject::find($request->id);
+        $subject->name = $request->name;
+        $subject->save();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+
+
+    public function htmlentitiesconvertor(){
+        /*
+        $answer = Answer::where('question_id', 114)->first();
+        $answer->name = html_entity_decode($answer->name);
+        $answer->save();
+        return response()->json(['payload'=>['success'=>'true']]);
+
+        $answers = Answer::all();
+        foreach ($answers as $answer) {
+            $answer->name = html_entity_decode($answer->name);
+            $answer->save();
+        }
+        */
+        $questions = Question::all();
+        foreach ($questions as $question) {
+            $question->name = html_entity_decode($question->name);
+            $question->save();
+        }
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
     public function getresults(Request $request){
         $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
+        $this->testResult->removeAllEmptyResults();
         $testingResults = DB::table('testing_results')
         ->join('subjects', 'testing_results.subject_id', '=', 'subjects.id')
         ->select(DB::raw('testing_results.id as resultId, testing_results.answered_questions_number, IF(testing_results.answered_questions_number=0, 0, testing_results.correct_questions_number/testing_results.answered_questions_number) as quality, 
@@ -138,9 +185,16 @@ class ReactController extends Controller
         }
     }
     
+    public function removezeroansweredtestingresults(){/// one time script to clean up DB
+        $this->testResult->removeAllEmptyResults();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+
     public function processTesting(Request $request){
         if($request->ifToDestroyTemporaryQuestions == 1){//when user leaves Test page, we need to destroy temporary testing questions to prevent fraud
             $testingSessionId = TestingSession::where('session_hash', $request->testingSessionHash)->pluck('id')->first();
+            $this->testResult->removeEmptyResult($testingSessionId);
             $res = TemporaryTestingQuestions::where('session_id', $testingSessionId)->delete();
             return response()->json(['payload'=>['success'=>'true', 'message'=>'Temporary Questions has been destroyed']]);
         }
@@ -189,17 +243,70 @@ class ReactController extends Controller
                     ]]);
     }
 
-    public function editsubjects(Request $request ){
+    public function editquestions(Request $request ){
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:25',
+            'answerCorrect' => 'required',
+            'correctId' => 'required',
+            'question' => 'required',
+            'questionId' => 'required',
+            'uncorrect0' => 'required',
+            'uncorrect1' => 'required',
+            'uncorrect2' => 'required',
+            'uncorrectId0' => 'required', ///         are required, but uncorrectId1 and uncorrectId2 may be empty
         ]);
-    
+
         if ($validator->fails()) {
-            return response()->json(['payload'=>['success'=>'false', 'message'=>'Subject field is required']]);
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Not all fields are sent, some missing']]);
+        };
+
+
+        DB::beginTransaction();
+        $question = Question::find($request->questionId);
+        if(!isset($question)){  return response()->json(['payload'=>['success'=>'false', 'message'=>'Cant find question by this id']]);  };
+        $question->name = $request->question;
+        $question->save();
+
+        $answerCorrect = Answer::find($request->correctId);
+        if(!isset($answerCorrect)){  return response()->json(['payload'=>['success'=>'false', 'message'=>'Cant find Correct answer by this id']]);  };
+        $answerCorrect->name = $request->answerCorrect;
+        $answerCorrect->save();
+
+        $answerUncorrect0 = Answer::find($request->uncorrectId0);
+        if(!isset($answerUncorrect0)){  return response()->json(['payload'=>['success'=>'false', 'message'=>'Cant find unCorrect answer by this id']]);  };
+        $answerUncorrect0->name = $request->uncorrect0;
+        $answerUncorrect0->save();
+
+        if($request->uncorrectId1 == ''){
+            $answer = new Answer;
+            $answer->question_id = $request->questionId;
+            $answer->name = $request->uncorrect1;
+            $answer->active = 1;
+            $answer->correct = 0;
+            $answer->save();
+        } else {
+            $answerUncorrect1 = Answer::find($request->uncorrectId1);
+            if(!isset($answerUncorrect1)){  return response()->json(['payload'=>['success'=>'false', 'message'=>'Cant find unCorrect1 answer by this id']]);  };
+            $answerUncorrect1->name = $request->uncorrect1;
+            $answerUncorrect1->save();
         }
-        $subject = Subject::find($request->id);
-        $subject->name = $request->name;
-        $subject->save();
+
+
+        if($request->uncorrectId2 == ''){
+            $answer2 = new Answer;
+            $answer2->question_id = $request->questionId;
+            $answer2->name = $request->uncorrect2;
+            $answer2->active = 1;
+            $answer2->correct = 0;
+            $answer2->save();
+        } else {
+            $answerUncorrect2 = Answer::find($request->uncorrectId2);
+            if(!isset($answerUncorrect2)){  return response()->json(['payload'=>['success'=>'false', 'message'=>'Cant find unCorrect2 answer by this id']]);  };
+            $answerUncorrect2->name = $request->uncorrect2;
+            $answerUncorrect2->save();
+        }
+
+        DB::commit();// transaction ended
         return response()->json(['payload'=>['success'=>'true']]);
     }
 
@@ -209,6 +316,18 @@ class ReactController extends Controller
             return response()->json(['payload'=>['success'=>'false', 'message'=>'Can\'t delete this subject, already questions added to it']]);
         }
         Subject::findOrFail($id)->delete();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+    public function deletequestion($id){
+        try {
+            DB::transaction(function () use ($id) {
+                Answer::where('question_id', $id)->delete();
+                Question::where('id',$id)->delete();
+            });
+        } catch (\Exception $e) {
+            return response()->json(['payload'=>['success'=>'false']]);
+        }
         return response()->json(['payload'=>['success'=>'true']]);
     }
 
@@ -672,9 +791,8 @@ class ReactController extends Controller
             return response()->json(['payload'=>['success'=>'false', 'message'=> 'conribution Id is wrong']]);
         }
         $answersContribution = AnswerContribution::where('question_id', $id)->get();
-        $question = $questionContribution->name;
-        $subjectId = $questionContribution->subject_id;
-        $userId = $questionContribution->user_id;
+        $subjectName = Subject::find($questionContribution->subject_id)->pluck('name')->first();
+        $userName = User::find($questionContribution->user_id)->pluck('name')->first();
         $uncorrectIterator = 0;
         foreach ($answersContribution as $value) {
             if($value['correct'] == 0){
@@ -686,7 +804,72 @@ class ReactController extends Controller
             };
         }
         return response()->json(['payload'=>['success'=>'true', 'content' => 
-        ['question' => $question, 'subjectId' => $subjectId, 'userId' => $userId, 'contibutionid' => $id, 'answerCorrect' => $answerCorrect, 'uncorrect0' => $uncorrect0, 'uncorrect1' => $uncorrect1, 'uncorrect2' => $uncorrect2]]]);
+        ['question' => $questionContribution->name, 
+        'subjectId' => $questionContribution->subject_id, 
+        'subjectName' => $subjectName,
+        'userId' => $questionContribution->user_id, 
+        'userName'=> $userName,
+        'contibutionid' => $id, 
+        'answerCorrect' => $answerCorrect, 
+        'uncorrect0' => $uncorrect0, 
+        'uncorrect1' => $uncorrect1, 
+        'uncorrect2' => $uncorrect2]]]);
+    }
+
+    public function getquestionandanswerstoedit($id){
+        if(!isset($id)){
+            return response()->json(['payload'=>['success'=>'false', 'message'=> 'question Id missing']]);
+        }
+        $questionContribution = Question::where('id', $id)->first();
+        if(!$questionContribution){
+            return response()->json(['payload'=>['success'=>'false', 'message'=> 'question Id is wrong']]);
+        }
+        $answersContribution = Answer::where('question_id', $id)->get();
+        $question = $questionContribution->name;
+        $subjectId = $questionContribution->subject_id;
+        $uncorrectIterator = 0;
+        foreach ($answersContribution as $value) {
+            if($value['correct'] == 0){
+                $name = 'uncorrect'.$uncorrectIterator;
+                $idname = 'uncorrectId'.$uncorrectIterator;
+                $uncorrectIterator += 1;
+                $$name = $value['name'];
+                $$idname = $value['id'];
+            } else {
+                $answerCorrect = $value['name'];// just comment
+                $correctId = $value['id'];//
+            };
+        }
+
+        if(!isset($uncorrect1)){
+            $uncorrect1 = '';
+        };
+
+        if(!isset($uncorrect2)){
+            $uncorrect2 = '';
+        }
+
+        if(!isset($uncorrectId1)){
+            $uncorrectId1 = '';
+        }
+
+        if(!isset($uncorrectId2)){
+            $uncorrectId2 = '';
+        }
+
+        return response()->json(['payload'=>['success'=>'true', 'content' => 
+        ['question' => $question, 'subjectId' => $subjectId,  
+        'questionId' => $id, 
+        'answerCorrect' => $answerCorrect, 
+        'correctId' => $correctId,  
+        'uncorrect0' => $uncorrect0, 
+        'uncorrect1' => $uncorrect1, 
+        'uncorrect2' => $uncorrect2,
+        'uncorrectId0' => $uncorrectId0,
+        'uncorrectId1' => $uncorrectId1,
+        'uncorrectId2' => $uncorrectId2
+              
+        ]]]);
     }
 
     public function getcontributionitemuser(Request $request, $id){

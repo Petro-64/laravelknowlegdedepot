@@ -18,6 +18,7 @@ class VerifyCsrfToken extends Middleware
         '/react/editsubjects',
         '/react/deletesubjects/*',
         '/react/deleteusers/*',
+        '/react/deletequestion/*',
         '/react/signup',
         '/react/testing',
         '/react/startTesting',
@@ -31,6 +32,10 @@ class VerifyCsrfToken extends Middleware
         '/react/addquestion',
         '/react/questions/*',
         '/react/togglequestionactivity/*',
-        '/react/answers/*'
+        '/react/answers/*',
+        '/react/getquestionandanswerstoedit/*',
+        '/react/editquestions',
+        '/react/htmlentitiesconvertor3456346',
+        '/react/removezeroansweredtestingresultsr',
     ];
 }

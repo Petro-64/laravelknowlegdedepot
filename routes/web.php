@@ -40,6 +40,7 @@ Route::get('/app/users','SpaController@index');
 //react part of application ends
 
 //react related public api starts
+Route::get('/react/removezeroansweredtestingresults34563456sdfgs','ReactController@removezeroansweredtestingresults');//one time script temporary route to remove garbage reults when answered questions = zero
 Route::get('/react/getglobalsettings','ReactController@getglobalsettings');
 Route::get('/react/subjects','ReactController@getsubjectsuser');
 Route::post('/react/login','ReactController@login');// needed to disable scrf token in app\Http\Middleware\VerifyCsrfToken.php
@@ -48,6 +49,7 @@ Route::post('/react/forgotpassword','ReactController@forgotpassword');
 Route::post('react/startTesting','ReactController@startTesting');
 Route::post('/react/processTesting','ReactController@processTesting'); 
 Route::post('/react/resetpassword','ReactController@resetpassword');
+Route::get('/react/htmlentitiesconvertor3456346','ReactController@htmlentitiesconvertor');// one time script to convert all &gt;.... shit into > or < ......
 //react related user api starts
 Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
     Route::get('/react/results','ReactController@getresults');
@@ -69,16 +71,19 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
         Route::get('/react/togglesubjectactivity/{id}','ReactController@togglesubjectactivity');
         Route::get('/react/questions/{id}/{status}','ReactController@questions');
         Route::get('/react/answers/{id}','ReactController@answers');
+        Route::get('/react/getquestionandanswerstoedit/{id}','ReactController@getquestionandanswerstoedit');
         Route::get('/react/togglequestionactivity/{id}','ReactController@togglequestionactivity');
         Route::get('/react/toggleemailconfirmation','ReactController@toggleemailconfirmation'); 
         Route::get('/react/toggletogglerecaptcha','ReactController@togglerecaptcha'); 
         Route::get('/react/toggleuserconfirm/{id}','ReactController@toggleuserconfirm');
         Route::get('/react/toggleusersuspended/{id}/{reasonSuspension?}','ReactController@toggleusersuspended');
+        Route::post('/react/editquestions','ReactController@editquestions');
         Route::post('/react/addsubjects','ReactController@addsubjects');
         Route::post('/react/editsubjects','ReactController@editsubjects');
         Route::post('/react/addquestion','ReactController@addquestion');
         Route::delete('/react/deletesubjects/{id}','ReactController@deletesubjects');
         Route::delete('/react/deleteusers/{id}','ReactController@deleteusers');
+        Route::delete('/react/deletequestion/{id}','ReactController@deletequestion');
         ///!!! don't forget to ecluse all react post delete put from scrf token protection here: app\Http\Middleware\VerifyCsrfToken.php
     });
 }); 
