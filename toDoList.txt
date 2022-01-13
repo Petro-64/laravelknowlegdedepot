@@ -1,7 +1,7 @@
 3) Check if "Quizz" is more proper word than "Test"
 5) When footer link clicked, need to scroll page to the top
 6) Edit questions in Laravel no way to add question # 4 if we have only 3 or 2  ////fixed for React part, Laravel part will retire
-7) Saga to try (for example for "questions by users functionality" or "user feedback")
+7) Saga to try (for example for "questions by users functionality" or "user_comments_functionality")
 8) React hooks
 9) Carousel on home page react with subjects icons auto rotating.
 10) Material UI

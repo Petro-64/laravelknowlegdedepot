@@ -770,6 +770,7 @@ class ReactController extends Controller
         return response()->json(['payload'=>['success'=>'true', 'contibution' => $contribution]]);
     }
 
+    
     public function getcontributionuser(Request $request){
         $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
         $contribution = DB::table('questions_contribution')
