@@ -65,5 +65,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\CheckAdmin::class,
         'ifJwTokenRoleExists' => \App\Http\Middleware\CheckJwtToken::class,
         'ifJwTokenAdmin' => \App\Http\Middleware\CheckJwtAdmin::class,
+        'CheckCommentsRateLimiter' => \App\Http\Middleware\CheckCommentsRateLimiter::class,
+        'CheckContributionRateLimiter' => \App\Http\Middleware\CheckContributionRateLimiter::class,
     ];
 }

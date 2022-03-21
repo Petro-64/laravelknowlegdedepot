@@ -47,9 +47,11 @@ class TestResult {
    }
 
    public function removeEmptyResult($sessionId){// need to do this in order not to save empty result when answered quesions number = 0
-      $answered_questions_number = DB::table('testing_results')->where('testing_session_id', $sessionId)->first()->answered_questions_number;
-      if($answered_questions_number == 0){
-         DB::table('testing_results')->where('testing_session_id', $sessionId)->delete();
+      if(DB::table('testing_results')->where('testing_session_id', $sessionId)->first() !==null){
+         $answered_questions_number = DB::table('testing_results')->where('testing_session_id', $sessionId)->first()->answered_questions_number;
+         if($answered_questions_number == 0){
+            DB::table('testing_results')->where('testing_session_id', $sessionId)->delete();
+         }
       }
    }
 

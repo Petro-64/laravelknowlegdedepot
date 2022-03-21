@@ -43,6 +43,7 @@ Route::get('/app/users','SpaController@index');
 Route::get('/react/removezeroansweredtestingresults34563456sdfgs','ReactController@removezeroansweredtestingresults');//one time script temporary route to remove garbage reults when answered questions = zero
 Route::get('/react/getglobalsettings','ReactController@getglobalsettings');
 Route::get('/react/subjects','ReactController@getsubjectsuser');
+Route::get('/react/ratelimiters','ReactController@getratelimiters');
 Route::post('/react/login','ReactController@login');// needed to disable scrf token in app\Http\Middleware\VerifyCsrfToken.php
 Route::post('/react/signup','ReactController@signup');
 Route::post('/react/forgotpassword','ReactController@forgotpassword'); 
@@ -56,10 +57,16 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
     Route::get('/react/emailconfirm/{id}','ReactController@getresults');
     Route::get('/react/cookieconsent/{id}','ReactController@cookieconsent');
     Route::post('/react/changepassword','ReactController@changepassword');
-    Route::post('/react/addmycontribution','ReactController@addmycontribution');
+        Route::group(['middleware' => ['CheckContributionRateLimiter']], function(){
+            Route::post('/react/addmycontribution','ReactController@addmycontribution');
+        });
     Route::get('/react/getcontributionuser','ReactController@getcontributionuser');
     Route::get('/react/getcontributionitemuser/{id}','ReactController@getcontributionitemuser');
     Route::get('/react/resendemailconfirmation/{id}','ReactController@resendemailconfirmation');
+        Route::group(['middleware' => ['CheckCommentsRateLimiter']], function(){
+            Route::post('/react/addmycomment','ReactController@addmycomment');
+        });
+
     //react related admin api starts
     Route::group(['middleware' => ['ifJwTokenAdmin']], function(){
         Route::get('/react/subjectsadmin','ReactController@getsubjectsadmin');
@@ -84,7 +91,7 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
         Route::delete('/react/deletesubjects/{id}','ReactController@deletesubjects');
         Route::delete('/react/deleteusers/{id}','ReactController@deleteusers');
         Route::delete('/react/deletequestion/{id}','ReactController@deletequestion');
-        ///!!! don't forget to ecluse all react post delete put from scrf token protection here: app\Http\Middleware\VerifyCsrfToken.php
+        ///!!! don't forget to excluse all react post delete put from scrf token protection here: app\Http\Middleware\VerifyCsrfToken.php
     });
 }); 
 //react related public api ends

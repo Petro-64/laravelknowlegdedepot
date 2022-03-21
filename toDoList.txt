@@ -1,15 +1,15 @@
 3) Check if "Quizz" is more proper word than "Test"
 5) When footer link clicked, need to scroll page to the top
-6) Edit questions in Laravel no way to add question # 4 if we have only 3 or 2  ////fixed for React part, Laravel part will retire
-7) Saga to try (for example for "questions by users functionality" or "user_comments_functionality")
-8) React hooks
+6) ///Edit questions in Laravel no way to add question # 4 if we have only 3 or 2  ////fixed for React part, Laravel part will retire
+7) ///Saga to try (for example for "questions by users functionality" or "user_comments_functionality")/// Done 25-01-22
+8) ////React hooks///////
 9) Carousel on home page react with subjects icons auto rotating.
-10) Material UI
+10) /////Material UI//////
 11) Unit testing in Laravel
-12) Cookie "details" link at the bottom of the page  doesn't show cookie page, just empty screen...
+12) /////Cookie "details" link at the bottom of the page  doesn't show cookie page, just empty screen.../////
 12b) Cookie popup showing logic isn't clear.....
 12a) ///// Cookie popup bottom panel design need to be fixed (for desktop width != 100%, gaps on both sides) ///// Done 22/12/21
-13) Dark grey Footer looks weird on page (Contribute -> My contribution status)
+13) ////Dark grey Footer looks weird on page (Contribute -> My contribution status) //// no more footers
 14) Need to add feature for admin to be able to see particular user contribution (filter by user)
 17) Even if user is suspended, he is able to do testing untill next logout - login. 
 18) //// When suspended user logging in, "Network error" alert appears  ////fixed 23-12-21//////
@@ -18,12 +18,57 @@
 20) Need to ensure that for suspended users ( roleId = 4 )  all ajax requests are blocked on backend and frontend level
 22) Admin - global settings page itself not translated and no top gap
 23) On Test page when selected subject "Current subject: HTML" message appears above select, but when deselect subject, ugly "Current subject:" messaage still visible
-25) On "Admin - add" question question field characters counter jumps from right to bottom when count > 99
+
+25) ///On "Admin - add" question question field characters counter jumps from right to bottom when count > 99///done 17-01-22
+
 27) Most of the flash messages aren't translated
 29) "Test" results and "Question-Answers" tables to add "Zebra" design
 31) Test results page behaves weird, filter by subject doesn't work properly, last subject checkbox filter gives weird results (later reloaded page and it works properly... :-(  )
 33) To go through all React controller methods and check if proper validation existst for each methods 
-38) When stop testing by pressing red button, popup appears with russian phrase even for english as current lang.
-40) Add "Add feedback button" and feedback storing functionality.
+38) When stop testing by pressing red button, popup appears with russian phrase even for english as current lang (see issue #59).
+40) ////Add "Add feedback button" and feedback storing functionality.////23-01-22
 42) Need to think about security, because we allow uesr to upload html and php code, which is very unsecure...
     a) To show questions/answers on PHP generated image instead of textareas?
+43) ///Sent Feedback popup not translated  ////done 25-01-22
+44) To emulate dynamic loading when loooooong list being scrolled (e.x. images or questions?)
+45) After you removed last question from given subject, admin->subjects still shows 1 question
+46) ////It's possible for admin to create two subjects with similar names////fixed 25-01-22
+47) ///Footer position is dubtfull for Tablet / Mobile layout (IPhone12 pro for example) /// no more footer
+48) ///When add comment returns some error, we need to show not green but red Flash message
+49) ///For add comment and contribution we need rate limiter not to allow user to post infinite number of comments per day per page
+50) ///On user-make contribution page need to add "To My contributions status" navigational button"///done 23-01-22
+51) ///need to hide Comments function from unregistered users///done 23-01-22
+52) ////When added contribution, Flash messge says  "Comment added"///done 23-01-22
+53) ///"Add comments" form buttons are ugly ;-( //////done 23-01-22
+54) If admin added new question, in case the same subject's question are being edited, new question isn't visible until you updated subject manually
+55) Change password when success, not translated to russian
+56) For admin account to remove "How are we doing?" button /// let it be, because we need to develop, can be removed later
+57) When login-logout in mobile layout, no flash messages 
+58) ////On admin - Global settings Page header has no top margin, no gap/////
+59) ////When stop test, prompt popup is shown but verbiage is on russian even when language is english
+60) Need to add "quick scroll to top" button
+61) ////Either remove footer or make it scrollable together with whole page like here: https://www.tagspaces.org/demo/
+62) Good example of cookie consent https://bethesda.net/ru/dashboard   https://www.ifit.com/  
+63) ////good idea how to automatically remove top bar when scrolling  https://neotracker.io/  ///// don't need this
+64) /// Iphone12 my one doesn't show time left pie diagramm  /// diagramm removed, time indicator is symplified.
+65) /// Flash messages aren't visible for mobile layout
+66) /////Error messages aren't translated for Login/Signup form
+67) //Send feedback side vertiacl button isn't translated
+68) //// Check if Send feedback functionality has proper backend implementation ;-)
+69) ////When just signed in (account just created) smth wrong with top right menu (no logout/change password option)
+70) //// When sign up, error messages come from server and aren't translated
+71) //////To add MUI snack for adding comments success / error
+72) //// Put rate limit for adding comments functionality (3 per day per user per page for example) duplicate for 49)
+73) /// On user added question details button "Back" is not MUI
+74) //// On user added question details need to see subject name for this question
+75) ///Add filter to user added question details page to be able to see only approved or only declined etc. questions
+76) //// On real device testing IPhone on Test page timeout between loading new question is a bit tooo long
+77) On real device testing IPhone on Test page when answer is clicked, shadow stays on after new questions are loaded /// need to try to emulate click // code added, need to test
+78) /////When abort test with no qusetions answered (by just navigating out to home page for example), system gives 500
+79) My questions status sorting doesn't work (on Status field for instance)
+80) ///// Need to run special route htmlentitiesconvertor on production to convert all html special characters  /react/htmlentitiesconvertor3456346 (see web.php)
+81) ///When stop testing by "Stop" button, we need to show screen with results, then redirect to 1) for registered - to results 2) For non registered - to Home page
+    We already have this screen when there are no more questions, so we can reuse this idea... style={this.props.ifRemainQuestions === 1 ? {display: 'none'} : {}}
+82) ////Login error message isn't translated
+83) /// On test page to usee the same select as being used for "contributions"
+84) ///On test page there is a text and inside there is a link for register (signup). Link is incorrect.

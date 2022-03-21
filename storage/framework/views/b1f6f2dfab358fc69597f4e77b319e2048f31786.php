@@ -9,7 +9,7 @@
         <title>Test your knowledge</title>
         <!-- Styles -->
         <link type="text/css" href="<?php echo e(asset('static/css/2.7693b373.chunk.css')); ?>" rel="stylesheet">
-        <link type="text/css" href="<?php echo e(asset('static/css/main.72d51d0a.chunk.css')); ?>" rel="stylesheet">
+        <link type="text/css" href="<?php echo e(asset('static/css/main.194b6798.chunk.css')); ?>" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </head>
@@ -17,8 +17,8 @@
         <div id="app">
             <?php echo $__env->yieldContent('content'); ?>
         </div>
-        <script src="<?php echo e(asset('static/js/2.6b20589b.chunk.js')); ?>"></script>
-        <script src="<?php echo e(asset('static/js/main.0b9438c5.chunk.js')); ?>"></script>
+        <script src="<?php echo e(asset('static/js/2.13294b7b.chunk.js')); ?>"></script>
+        <script src="<?php echo e(asset('static/js/main.3e58dee5.chunk.js')); ?>"></script>
         <script src="<?php echo e(asset('static/js/runtime-main.27fa4a51.js')); ?>"></script>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

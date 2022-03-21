@@ -6,6 +6,7 @@ use App\Subject;
 use App\Question;
 use App\QuestionContribution;
 use App\Answer;
+use App\Comment;
 use App\AnswerContribution;
 use App\Settings;
 use App\User;
@@ -95,13 +96,14 @@ class ReactController extends Controller
         $answer->name = html_entity_decode($answer->name);
         $answer->save();
         return response()->json(['payload'=>['success'=>'true']]);
-
+       */
+       
         $answers = Answer::all();
         foreach ($answers as $answer) {
             $answer->name = html_entity_decode($answer->name);
             $answer->save();
         }
-        */
+ 
         $questions = Question::all();
         foreach ($questions as $question) {
             $question->name = html_entity_decode($question->name);
@@ -124,6 +126,22 @@ class ReactController extends Controller
         //$this->memcache->set($resultsKeyName, $testingResults, self::memcachedTimeout);
         return response()->json(['payload'=>['success'=>'true', 'results' => $testingResults]]);
         //return $this->userMemcachedModels->getResults($request);
+    }
+
+    public function getratelimiters(Request $request){
+        $contributeRatelimiterHours = Config::get('ratelimiter.contributeRatelimiterHours');
+        $contributeRatelimiterContributions = Config::get('ratelimiter.contributeRatelimiterContributions');
+        $commentRatelimiterHours = Config::get('ratelimiter.commentRatelimiterHours');
+        $commentRatelimiterComments = Config::get('ratelimiter.commentRatelimiterComments');
+        if(isset($contributeRatelimiterHours) && isset($contributeRatelimiterContributions) && isset($commentRatelimiterHours) && isset($commentRatelimiterComments)){
+            return response()->json(['payload'=>['success'=>'true', 
+            'contributeRatelimiterHours' => $contributeRatelimiterHours, 
+            'contributeRatelimiterContributions' => $contributeRatelimiterContributions,
+            'commentRatelimiterHours' => $commentRatelimiterHours,
+            'commentRatelimiterComments' => $commentRatelimiterComments]]);
+        } else {
+            return response()->json(['payload'=>['success'=>'false']]);
+        }
     }
 
     public function changepassword(Request $request){
@@ -398,11 +416,11 @@ class ReactController extends Controller
 
     public function addsubjects(Request $request){
         $validator = Validator::make($request->all(), [
-            'subject' => 'required|max:25',
+            'subject' => 'required|max:25|unique:App\Subject,name',
         ]);
     
         if ($validator->fails()) {
-            return response()->json(['payload'=>['success'=>'false', 'message'=>'Subject field is required']]);
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Check your Subject field']]);
         }
         
         $subject = new Subject;
@@ -453,6 +471,27 @@ class ReactController extends Controller
             }
         }
         return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+
+    public function addmycomment(Request $request){
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required|max:200',
+            'route' => 'required|max:100',
+            'user_id' => 'required',
+        ]);
+
+        $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
+
+        $comment = new Comment;
+        $comment->comment = $request->comment;
+        $comment->user_id = $parseResult['user_id'];
+        $comment->route = $request->route;
+        if($comment->save()){
+            return response()->json(['payload'=>['success'=>'true']]);
+        } else {
+            return response()->json(['payload'=>['success'=>'false']]);
+        };
     }
 
     public function questions($id = 1, $status = 1){
@@ -775,7 +814,7 @@ class ReactController extends Controller
         $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
         $contribution = DB::table('questions_contribution')
         ->join('subjects', 'questions_contribution.subject_id', '=', 'subjects.id')
-        ->select(DB::raw('questions_contribution.id as resultId, questions_contribution.approved as status,  
+        ->select(DB::raw('questions_contribution.id as id, questions_contribution.id as resultId, questions_contribution.approved as status,  
         questions_contribution.created_at as createdAt, subjects.name as subjectName'))
         ->where('questions_contribution.user_id', '=', $parseResult['user_id'])
         ->orderBy('questions_contribution.created_at', 'asc')
