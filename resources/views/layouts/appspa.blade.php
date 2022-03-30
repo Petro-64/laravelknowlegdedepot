@@ -10954,8 +10954,8 @@ a.text-dark:focus {
         <div id="app">
             @yield('content')
         </div>
-        <script src="{{ asset('static/js/2.4b775888.chunk.js') }}"></script>
-        <script src="{{ asset('static/js/main.604b6971.chunk.js') }}"></script>
+        <script src="{{ asset('static/js/2.f3d92ea8.chunk.js') }}"></script>
+        <script src="{{ asset('static/js/main.6284018a.chunk.js') }}"></script>
         <script src="{{ asset('static/js/runtime-main.27fa4a51.js') }}"></script>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

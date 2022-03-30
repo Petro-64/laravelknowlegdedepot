@@ -7,21 +7,21 @@
 10) /////Material UI//////
 11) Unit testing in Laravel
 12) /////Cookie "details" link at the bottom of the page  doesn't show cookie page, just empty screen.../////
-12b) Cookie popup showing logic isn't clear.....
+12b) Cookie popup showing logic isn't clear, button is old-fashioned.....
 12a) ///// Cookie popup bottom panel design need to be fixed (for desktop width != 100%, gaps on both sides) ///// Done 22/12/21
 13) ////Dark grey Footer looks weird on page (Contribute -> My contribution status) //// no more footers
 14) Need to add feature for admin to be able to see particular user contribution (filter by user)
 17) Even if user is suspended, he is able to do testing untill next logout - login. 
 18) //// When suspended user logging in, "Network error" alert appears  ////fixed 23-12-21//////
 18) //// When suspended user logging in, he is still has "Test, Settings" and "Test  results" links at the botton navigation   ////fixed 23-12-21//////
-19) Flash notification pop up position is not properly centered 
+19) ///Flash notification pop up position is not properly centered 
 20) Need to ensure that for suspended users ( roleId = 4 )  all ajax requests are blocked on backend and frontend level
-22) Admin - global settings page itself not translated and no top gap
-23) On Test page when selected subject "Current subject: HTML" message appears above select, but when deselect subject, ugly "Current subject:" messaage still visible
+22) //Admin - global settings page itself not translated and no top gap  // admin section can be translated later
+23) /// On Test page when selected subject "Current subject: HTML" message appears above select, but when deselect subject, ugly "Current subject:" messaage still visible
 
-25) ///On "Admin - add" question question field characters counter jumps from right to bottom when count > 99///done 17-01-22
+25) /// On "Admin - add" question question field characters counter jumps from right to bottom when count > 99///done 17-01-22
 
-27) Most of the flash messages aren't translated
+27) ////Most of the flash messages aren't translated
 29) "Test" results and "Question-Answers" tables to add "Zebra" design
 31) Test results page behaves weird, filter by subject doesn't work properly, last subject checkbox filter gives weird results (later reloaded page and it works properly... :-(  )
 33) To go through all React controller methods and check if proper validation existst for each methods 
@@ -63,7 +63,7 @@
 74) //// On user added question details need to see subject name for this question
 75) ///Add filter to user added question details page to be able to see only approved or only declined etc. questions
 76) //// On real device testing IPhone on Test page timeout between loading new question is a bit tooo long
-77) On real device testing IPhone on Test page when answer is clicked, shadow stays on after new questions are loaded /// need to try to emulate click // code added, need to test
+77) On real device testing IPhone on Test page when answer is clicked, shadow stays on after new questions are loaded /// need to try to emulate click // code added, need to test // not fixed // seems to be IOS issue (not safari)// removed shadow
 78) /////When abort test with no qusetions answered (by just navigating out to home page for example), system gives 500
 79) My questions status sorting doesn't work (on Status field for instance)
 80) ///// Need to run special route htmlentitiesconvertor on production to convert all html special characters  /react/htmlentitiesconvertor3456346 (see web.php)
@@ -72,3 +72,7 @@
 82) ////Login error message isn't translated
 83) /// On test page to usee the same select as being used for "contributions"
 84) ///On test page there is a text and inside there is a link for register (signup). Link is incorrect.
+85) /// When successfully signed up, page shows old fashion button ("Resend link")
+86) /// When unverified user page, neeed to hide side navigation (see previous bug)/// no need to hide its just test functionality which is available for none-confirmed users
+87) ///When there is no added questions, we need to show proper message
+88) Add Ukrainian language
