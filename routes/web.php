@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth']], function(){
         });
         Route::post('/question', function (Request $request) {  
             $validator = Validator::make($request->all(), [
-                'question' => 'required|max:250',
+                'question' => 'required|max:500',
                 'answers' => 'array|min:2'
             ]);
 

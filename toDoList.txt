@@ -76,3 +76,24 @@
 86) /// When unverified user page, neeed to hide side navigation (see previous bug)/// no need to hide its just test functionality which is available for none-confirmed users
 87) ///When there is no added questions, we need to show proper message
 88) Add Ukrainian language
+89) ///Looks like all questions being added to test, but we need to add only active questions set.//Checked, only active being added
+90) When editing questions, there is a background color indicating which question has been edited, it being kept in cookie, but in couple of weeks it's dissapeared...
+91) Subject is not being shown when admin in question edit mode
+92) When adding your comment by pressong side button "how are we doing", when overlay appears, this button stays on top of overlay
+93) When you clicked "Signup" by mistake instead of "Login" button, it would be useful to have "Login", or visi versa "Signup" feature instead of clicking top left logo to navigate back...
+94) On Laravel part http://knowledgedepot.ca/ when  call this: http://knowledgedepot.ca/logout some piece of code being shown because of error page displayed... 
+95) To add "refresh" functionality for the edit questions page, otherwice need to switch to different subject, then return to the initial subject to see result of the added questions.
+96) ///To think about transforming code into image to pevent cheating (say, using console or copy-paste code into editor), ////or at least, to make it unsellectable
+97) need to hide none-react part of app.
+98) when admin - edit questions, pagination numbers aren't centered within rectangle
+99) Add "My mistakenly answered quesions", kinda "Rabota nad oshibkami..."
+100) Add "Get email notification when new question added" functionality
+101) ////Need to increase question length on Laravel "Add question" page to 500 characters
+102) When we are on question edit page, there is a feature when you mouse over question, answers are shown. We need to position this answers popup so it wouldn't overlapped with question.
+Currently part of the question is invisible when mouse over, especially for big questions
+103) //// In Laravel part, admin section need to increase input type textArea height for Question, usually we need to do it manually because questions usually bigger than visible area
+104) ///For the same purpose as 96, need to disable right click on testing page to prevent copy-paste of questions using code inspector
+////July 1st - questions - answers on Test page now are none-selectable, right click prevented on Test page, see 96 and 104///////
+////July 1st home/peter/blog/resources/views/questions.blade.php changed Text Area height to make it easiser to add question, see 103////
+////July 1st /home/peter/blog/routes/web.php increased question length to 500 chars see 101//////
+////July 1st /home/peter/my-react/src/styled/StyledEditQuestionrRow.js 102 Hint popup position fixed//////

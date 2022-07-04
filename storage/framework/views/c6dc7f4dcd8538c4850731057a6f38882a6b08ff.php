@@ -37,7 +37,7 @@
             <div class="form-group">
               <table style="width: 100%; text-align: center">
                 <tr><td colspan="2"><label for="task" class="col-sm-3 control-label">New Question</label></td></tr>
-                <tr><td colspan="2"><textarea name="question" id="question-name" rows="3" cols="" class="form-control"><?php echo e(old('question')); ?></textarea></td></tr>
+                <tr><td colspan="2"><textarea name="question" id="question-name" rows="7" cols="" class="form-control"><?php echo e(old('question')); ?></textarea></td></tr>
                 <tr data-click="first"><td colspan="2"><label for="first-radio">Answer 1</label></td></tr>
                 <tr data-click="first"><td><textarea name="answer[]" id="answer-name-1" rows="3" cols="" class="form-control"></textarea></td><td style="width: 20%"><input type="radio" id="first-radio" name="correct" value="a0"></td></tr>
                 <tr data-click="second"><td colspan="2"><label for="second-radio">Answer 2</label></td></tr>
