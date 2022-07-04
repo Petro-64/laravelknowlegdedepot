@@ -21,7 +21,12 @@ use App\Http\Resources\AnswerCollection as AnswerToQuestionResource;
 
 Auth::routes();
 Route::get('/corransw/{id}', 'TestsOneController@getCorrectAnswer');//need to have correct answer id to be able to show correcta answer after user clicked on answer
-Route::get('/', function () {  return view('home'); });
+//Route::get('/', function () {  return view('home'); });
+
+Route::get('/', function () {
+    return redirect('/app');
+});
+
 Route::get('/contribution', function () { return view('contribution'); })->name('contribution');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/tests', 'TestsOneController@index')->name('tests');

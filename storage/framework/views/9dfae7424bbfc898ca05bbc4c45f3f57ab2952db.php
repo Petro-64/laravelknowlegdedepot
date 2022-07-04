@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
-                    <?php echo e(config('app.name', 'Laravel')); ?>
+                    <?php echo e(config('app.name', 'Knowledgedepot')); ?>
 
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php echo e(__('Toggle navigation')); ?>">
@@ -34,37 +34,6 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tests</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown05">
-                                <a class="dropdown-item" href="<?php echo e(route('tests')); ?>">Free tests</a>
-                                <?php if(auth()->guard()->guest()): ?>
-                                <?php else: ?>
-                                <a class="dropdown-item" href="<?php echo e(route('contribution')); ?>">My contribution
-                                <a class="dropdown-item" href="<?php echo e(route('testresults')); ?>">Test results</a>
-                                <?php endif; ?>
-                            </div>
-                        </li>
-                        <?php if(auth()->guard()->guest()): ?>
-                        <?php else: ?>
-                        <?php if(Auth::user()->roles[0]->name =='admin'): ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown06">
-                                <a class="dropdown-item" href="<?php echo e(route('subjects')); ?>">Subjects</a>
-                                <a class="dropdown-item" href="<?php echo e(route('questions')); ?>">Add questions</a>
-                                <a class="dropdown-item" href="<?php echo e(route('questions_edit')); ?>">Edit questions</a>
-                                <!--<a class="dropdown-item" href="<?php echo e(route('questions_upload')); ?>">Upload questions from text file</a>-->
-                            </div>
-                        </li>
-                        <?php endif; ?>
-                        <?php endif; ?>
-
-                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
