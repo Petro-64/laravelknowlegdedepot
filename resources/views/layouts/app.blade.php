@@ -33,6 +33,23 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        @guest
+                        @else
+                        @if(Auth::user()->roles[0]->name =='admin')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown06">
+                                <a class="dropdown-item" href="{{ route('subjects') }}">Subjects</a>
+                                <a class="dropdown-item" href="{{ route('questions') }}">Add questions</a>
+                                <a class="dropdown-item" href="{{ route('questions_edit') }}">Edit questions</a>
+                                <!--<a class="dropdown-item" href="{{ route('questions_upload') }}">Upload questions from text file</a>-->
+                            </div>
+                        </li>
+                        @endif
+                        @endguest
+
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -41,6 +58,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

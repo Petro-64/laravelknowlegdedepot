@@ -34,6 +34,23 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <?php if(auth()->guard()->guest()): ?>
+                        <?php else: ?>
+                        <?php if(Auth::user()->roles[0]->name =='admin'): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown06">
+                                <a class="dropdown-item" href="<?php echo e(route('subjects')); ?>">Subjects</a>
+                                <a class="dropdown-item" href="<?php echo e(route('questions')); ?>">Add questions</a>
+                                <a class="dropdown-item" href="<?php echo e(route('questions_edit')); ?>">Edit questions</a>
+                                <!--<a class="dropdown-item" href="<?php echo e(route('questions_upload')); ?>">Upload questions from text file</a>-->
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                        <?php endif; ?>
+
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -42,6 +59,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route('login')); ?>"><?php echo e(__('Login')); ?></a>
                             </li>
+                            <?php if(Route::has('register')): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo e(route('register')); ?>"><?php echo e(__('Register')); ?></a>
+                                </li>
+                            <?php endif; ?>
                         <?php else: ?>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
