@@ -23,16 +23,22 @@ Auth::routes();
 Route::get('/corransw/{id}', 'TestsOneController@getCorrectAnswer');//need to have correct answer id to be able to show correcta answer after user clicked on answer
 //Route::get('/', function () {  return view('home'); });
 
-Route::get('/', function () {
-    return redirect('/app');
-});
+// hide old Laravel frontend start
+Route::get('/', function () {    return redirect('/app');});
+Route::get('/tests', function () {    return redirect('/app');});
+Route::get('/tests/{id}', function () {    return redirect('/app');});
+Route::get('/testing', function () {    return redirect('/app');});
+Route::get('/testing/{id?}', function () {    return redirect('/app');});
+Route::get('/home', function () {    return redirect('/app');});
+Route::get('/contribution', function () {    return redirect('/app');});
+// hide old Laravel frontend end
 
-Route::get('/contribution', function () { return view('contribution'); })->name('contribution');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/tests', 'TestsOneController@index')->name('tests');
-Route::get('/tests/{id}','TestsOneController@showsubject');
-Route::get('/testing','TestsOneController@testing');
-Route::get('/testing/{id?}','TestsOneController@testing');
+//Route::get('/contribution', function () { return view('contribution'); })->name('contribution');
+//Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/tests', 'TestsOneController@index')->name('tests');
+//Route::get('/tests/{id}','TestsOneController@showsubject');
+//Route::get('/testing','TestsOneController@testing');
+//Route::get('/testing/{id?}','TestsOneController@testing');
 Route::get('/verifyemailaddress/{token?}', 'ServiceController@verifyemail');
 Route::get('/passwordreset/{token?}', 'ServiceController@passwordreset');
 

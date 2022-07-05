@@ -89,7 +89,7 @@
 99) Add "My mistakenly answered quesions", kinda "Rabota nad oshibkami..."
 100) Add "Get email notification when new question added" functionality
 101) ////Need to increase question length on Laravel "Add question" page to 500 characters
-102) When we are on question edit page, there is a feature when you mouse over question, answers are shown. We need to position this answers popup so it wouldn't overlapped with question.
+102) //When we are on question edit page, there is a feature when you mouse over question, answers are shown. We need to position this answers popup so it wouldn't overlapped with question.
 Currently part of the question is invisible when mouse over, especially for big questions
 103) //// In Laravel part, admin section need to increase input type textArea height for Question, usually we need to do it manually because questions usually bigger than visible area
 104) ///For the same purpose as 96, need to disable right click on testing page to prevent copy-paste of questions using code inspector
@@ -97,3 +97,6 @@ Currently part of the question is invisible when mouse over, especially for big 
 ////July 1st home/peter/blog/resources/views/questions.blade.php changed Text Area height to make it easiser to add question, see 103////
 ////July 1st /home/peter/blog/routes/web.php increased question length to 500 chars see 101//////
 ////July 1st /home/peter/my-react/src/styled/StyledEditQuestionrRow.js 102 Hint popup position fixed//////
+105) To add nice and colorful description of what can be done using our progect, maybe after features 100) and 99) is added
+106) To add "Report this question" functionality with proper rate limiter
+107) Need to hide the rest of Laravel rotes like /tests etc.
