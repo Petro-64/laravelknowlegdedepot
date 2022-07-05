@@ -100,3 +100,6 @@ Currently part of the question is invisible when mouse over, especially for big 
 105) To add nice and colorful description of what can be done using our progect, maybe after features 100) and 99) is added
 106) To add "Report this question" functionality with proper rate limiter
 107) Need to hide the rest of Laravel rotes like /tests etc.
+108) Registartion confirmation letter user recives from petro@know....., better would be from admin@
+109) When resending registration confirmation link, need to provide some feedback kinda popup "thanks, link resent...."
+///http://knowledgedepot.ca/app

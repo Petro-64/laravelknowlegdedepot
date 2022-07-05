@@ -1,6 +1,6 @@
 <h1>Hi, {{ $name }}</h1>
-<h3>Thanks for your registration with <a href="{{ $projectURL }}app">knowledgedepot.ca</a></h3>
-<p>To verify your email address, please click button below</p>
+<h3>Thanks for your registration with knowledgedepot.ca</h3>
+<h3>To verify your email address, please click button below</h3>
 <br/><br/>
 <a href="{{ $projectURL }}verifyemailaddress/{{ $token }}" style="cursor: pointer;"><button style="  background-color: #4CAF50; /* Green */
   border: none;
