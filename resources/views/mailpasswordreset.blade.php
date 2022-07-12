@@ -1,6 +1,6 @@
 <h1>Hi, {{ $name }}</h1>
-<h3>You recently requested to reset password for your  <a href="{{ $projectURL }}app">knowledgedepot.ca</a>&nbsp;account</h3>
-<p>Click the button below to reset it. This password reset is only valid for the next {{ $expirationTimeInHours }} hours</p>
+<h3>You recently requested to reset password for your knowledgedepot.ca account</h3>
+<p>Click the button below to reset it. Password reset link valid only for the next {{ $expirationTimeInHours }} hours</p>
 <br/><br/>
 <a href="{{ $projectURL }}passwordreset/{{ $token }}" style="cursor: pointer;"><button style="  background-color: #4CAF50; /* Green */
   border: none;

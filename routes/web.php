@@ -71,6 +71,11 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
         Route::group(['middleware' => ['CheckContributionRateLimiter']], function(){
             Route::post('/react/addmycontribution','ReactController@addmycontribution');
         });
+
+        Route::group(['middleware' => ['CheckQuestionsReportRateLimiter']], function(){
+            Route::post('/react/addquestionreport','ReactController@addquestionreport');
+        });
+
     Route::get('/react/getcontributionuser','ReactController@getcontributionuser');
     Route::get('/react/getcontributionitemuser/{id}','ReactController@getcontributionitemuser');
     Route::get('/react/resendemailconfirmation/{id}','ReactController@resendemailconfirmation');

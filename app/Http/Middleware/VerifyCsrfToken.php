@@ -39,5 +39,6 @@ class VerifyCsrfToken extends Middleware
         '/react/removezeroansweredtestingresultsr',
         '/react/addmycomment',
         '/react/ratelimiters',
+        '/react/addquestionreport',
     ];
 }

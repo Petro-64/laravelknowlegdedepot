@@ -80,7 +80,8 @@
 90) When editing questions, there is a background color indicating which question has been edited, it being kept in cookie, but in couple of weeks it's dissapeared...
 91) Subject is not being shown when admin in question edit mode
 92) When adding your comment by pressong side button "how are we doing", when overlay appears, this button stays on top of overlay
-93) When you clicked "Signup" by mistake instead of "Login" button, it would be useful to have "Login", or visi versa "Signup" feature instead of clicking top left logo to navigate back...
+93) /////When you clicked "Signup" by mistake instead of "Login" button, it would be useful to have "Login", or visi versa "Signup" feature instead of clicking top left logo to navigate back...
+    same about signup page
 94) On Laravel part http://knowledgedepot.ca/ when  call this: http://knowledgedepot.ca/logout some piece of code being shown because of error page displayed... 
 95) To add "refresh" functionality for the edit questions page, otherwice need to switch to different subject, then return to the initial subject to see result of the added questions.
 96) ///To think about transforming code into image to pevent cheating (say, using console or copy-paste code into editor), ////or at least, to make it unsellectable
@@ -90,7 +91,7 @@
 100) Add "Get email notification when new question added" functionality
 101) ////Need to increase question length on Laravel "Add question" page to 500 characters
 102) //When we are on question edit page, there is a feature when you mouse over question, answers are shown. We need to position this answers popup so it wouldn't overlapped with question.
-Currently part of the question is invisible when mouse over, especially for big questions
+   Currently part of the question is invisible when mouse over, especially for big questions
 103) //// In Laravel part, admin section need to increase input type textArea height for Question, usually we need to do it manually because questions usually bigger than visible area
 104) ///For the same purpose as 96, need to disable right click on testing page to prevent copy-paste of questions using code inspector
 ////July 1st - questions - answers on Test page now are none-selectable, right click prevented on Test page, see 96 and 104///////
@@ -98,8 +99,11 @@ Currently part of the question is invisible when mouse over, especially for big 
 ////July 1st /home/peter/blog/routes/web.php increased question length to 500 chars see 101//////
 ////July 1st /home/peter/my-react/src/styled/StyledEditQuestionrRow.js 102 Hint popup position fixed//////
 105) To add nice and colorful description of what can be done using our progect, maybe after features 100) and 99) is added
-106) To add "Report this question" functionality with proper rate limiter
-107) Need to hide the rest of Laravel rotes like /tests etc.
-108) Registartion confirmation letter user recives from petro@know....., better would be from admin@
+106) ////To add "Report this question" functionality with proper rate limiter
+107) ////Need to hide the rest of Laravel rotes like /tests etc.
+108) Registartion confirmation letter user recieves from petro@know....., better would be from admin@
 109) When resending registration confirmation link, need to provide some feedback kinda popup "thanks, link resent...."
-///http://knowledgedepot.ca/app
+110) For some reson can't change registration email template, it's already updated on server but still sends old version. Server restarted and cache is cleared... ;-(.  
+   New version is simpler and removed confusing link..
+111) ///When test is finished, it would be good to give users choice -  2 buttons "New test" or "Results"
+112) To have "DB dump" functionality

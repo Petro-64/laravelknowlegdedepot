@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Subject;
 use App\Question;
 use App\QuestionContribution;
+use App\QuestionReport;
 use App\Answer;
 use App\Comment;
 use App\AnswerContribution;
@@ -133,12 +134,17 @@ class ReactController extends Controller
         $contributeRatelimiterContributions = Config::get('ratelimiter.contributeRatelimiterContributions');
         $commentRatelimiterHours = Config::get('ratelimiter.commentRatelimiterHours');
         $commentRatelimiterComments = Config::get('ratelimiter.commentRatelimiterComments');
+        $questionReportRatelimiterHours = Config::get('ratelimiter.questionReportRatelimiterHours');
+        $questionReportRatelimiterReports = Config::get('ratelimiter.questionReportRatelimiterReports');
+
         if(isset($contributeRatelimiterHours) && isset($contributeRatelimiterContributions) && isset($commentRatelimiterHours) && isset($commentRatelimiterComments)){
             return response()->json(['payload'=>['success'=>'true', 
             'contributeRatelimiterHours' => $contributeRatelimiterHours, 
             'contributeRatelimiterContributions' => $contributeRatelimiterContributions,
             'commentRatelimiterHours' => $commentRatelimiterHours,
-            'commentRatelimiterComments' => $commentRatelimiterComments]]);
+            'commentRatelimiterComments' => $commentRatelimiterComments,
+            'questionReportRatelimiterHours' => $questionReportRatelimiterHours,
+            'questionReportRatelimiterReports' => $questionReportRatelimiterReports]]);
         } else {
             return response()->json(['payload'=>['success'=>'false']]);
         }
@@ -257,7 +263,8 @@ class ReactController extends Controller
                         'ifRemainQuestions'=>$ifRemainQuestions,
                         'answered' => $currentState['answered'],
                         'correct' => $currentState['correct'],
-                        'correctAnswerId' => $correctAnswerId
+                        'correctAnswerId' => $correctAnswerId,
+                        'questionId' => $currentQuestionId
                     ]]);
     }
 
@@ -1022,5 +1029,25 @@ class ReactController extends Controller
             };
         }
         return response()->json(['payload'=>['success'=>'false', 'message' => 'Network error, try again later']]);
+    }
+
+    public function addquestionreport(Request $request){
+        $parseResult = ParseJWToken::doParse($request->header('JWToken'));
+        $userId = $parseResult['user_id'];
+
+        if (!$request->questionId) {
+            return response()->json(['payload'=>['success'=>'false',  'message'=>'Check data']]);
+        }
+
+        $queRep = new QuestionReport;
+        $queRep->question_id = $request->questionId;
+        $queRep->user_id = $userId;
+        $queRep->reports_number = 1;// to remove this DB field in future, no longer need this
+        if($queRep->save()){
+            $result = 'true';} else {$result = 'false';
+        };
+
+        return response()->json(['payload'=>['success'=>$result]]);
+        
     }
 }

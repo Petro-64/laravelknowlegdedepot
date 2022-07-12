@@ -12,5 +12,7 @@ return [
        'commentRatelimiterHours' => 24,
        'commentRatelimiterComments' => 3,
        'contributeRatelimiterHours' => 24,
-       'contributeRatelimiterContributions' => 5
+       'contributeRatelimiterContributions' => 5,
+       'questionReportRatelimiterHours' => 24,
+       'questionReportRatelimiterReports' => 5
     ];
