@@ -348,9 +348,16 @@ class ReactController extends Controller
         try {
             DB::transaction(function () use ($id) {
                 Answer::where('question_id', $id)->delete();
+                QuestionReport::where('question_id', $id)->delete();
                 Question::where('id',$id)->delete();
             });
         } catch (\Exception $e) {
+            /*
+            $file = '/home/peter/blog/storage/logs/my.txt';
+            $current = file_get_contents($file);
+            $current .= $e->getMessage()."\n";
+            */
+            file_put_contents($file, $current);
             return response()->json(['payload'=>['success'=>'false']]);
         }
         return response()->json(['payload'=>['success'=>'true']]);
