@@ -1057,4 +1057,12 @@ class ReactController extends Controller
         return response()->json(['payload'=>['success'=>$result]]);
         
     }
+
+    public function searchquestionbykey($keyword){
+        $questions = DB::table('questions')
+        ->where('questions.name', 'LIKE', '%'.$keyword.'%')
+        ->orderBy('questions.id', 'asc')
+        ->get();
+        return response()->json(['payload'=>['success'=>'true', 'questions' => $questions]]);
+    }
 }

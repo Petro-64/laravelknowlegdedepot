@@ -110,9 +110,10 @@
 113) Admin - need to have a comments viewer
 114) Admmin - question reports viewer
 115) Admin - results per user viewer
-116) Admin - search question by word(s)
+116) !!!!!!!!!!!!!!! priority !!!!!!!!   Admin - search question by word(s)
 117) To add some unit tests
 118) React Admin Add Question Page to fix....
 119) ////Can't delete question from Edit Question page
 120) ////Need to separate Subj_id for editing questions and subj_id for adding questions, because there is a bad influence. when leave addQuestion page, subj_id and questions set now is being reset
 121) Need to add rate limiter for failed login attempts
+122) When add new subject with existinf name, system log admin out.... (need just to show message)

@@ -86,6 +86,7 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
     //react related admin api starts
     Route::group(['middleware' => ['ifJwTokenAdmin']], function(){
         Route::get('/react/subjectsadmin','ReactController@getsubjectsadmin');
+        Route::get('/react/searchquestionbykey/{keyword}','ReactController@searchquestionbykey');
         Route::get('/react/users','ReactController@users'); 
         Route::get('/react/getcontributionadmin','ReactController@getcontributionadmin');
         Route::get('/react/getcontributionitemadmin/{id}','ReactController@getcontributionitemadmin');

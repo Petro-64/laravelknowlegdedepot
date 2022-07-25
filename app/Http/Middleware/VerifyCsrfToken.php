@@ -40,5 +40,6 @@ class VerifyCsrfToken extends Middleware
         '/react/addmycomment',
         '/react/ratelimiters',
         '/react/addquestionreport',
+        '/react/searchquestionbykey'
     ];
 }
