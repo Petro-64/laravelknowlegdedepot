@@ -32,6 +32,7 @@ use App\Jobs\SendEmailJob;
 use App\Jobs\SendPasswordResetEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use App\Mistakes;
 
 
 class ReactController extends Controller
@@ -113,6 +114,20 @@ class ReactController extends Controller
         return response()->json(['payload'=>['success'=>'true']]);
     }
 
+    public function getmistakes(Request $request){
+        $parseResult = ParseJWToken::doParse($request->header('JWToken'));
+        $userId = $parseResult['user_id'];
+        $myMistakes = DB::table('mistakes')
+        ->leftjoin('questions', 'questions.id', '=', 'mistakes.question_id')
+        ->leftjoin('subjects', 'subjects.id', '=', 'questions.subject_id')
+        ->select(DB::raw('subjects.name as name, questions.name as question, questions.id as questionId, COUNT(*) as countt'))
+        ->where('mistakes.user_id', '=', $userId)
+        ->groupBy(DB::raw("questions.id"))
+        ->orderBy('countt', 'desc')
+        ->get();
+        return response()->json(['payload'=>['success'=>'true', 'mistakes' => $myMistakes]]);
+    }
+
     public function getresults(Request $request){
         $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
         $this->testResult->removeAllEmptyResults();
@@ -166,7 +181,8 @@ class ReactController extends Controller
         ->join('role_user', 'users.id', '=', 'role_user.user_id')
         ->join('roles', 'roles.id', '=', 'role_user.role_id')
         ->leftjoin('testing_results', 'testing_results.user_id', '=', 'users.id')
-        ->select(DB::raw('users.name as name, users.email as email, users.created_at as createdAt, users.id as user_id, roles.name as status, COUNT(testing_results.user_id) as resultsNumber, users.suspension_reason as suspension_reason'))
+        ->select(DB::raw('users.name as name, users.email as email, users.created_at as createdAt, users.id as user_id, roles.name as status, 
+                    COUNT(testing_results.user_id) as resultsNumber, users.suspension_reason as suspension_reason'))
         ->groupBy(DB::raw("users.id, roles.name"))
         ->where('role_user.role_id', '!=', 2)
         ->orderBy('users.name', 'asc')
@@ -216,6 +232,7 @@ class ReactController extends Controller
 
 
     public function processTesting(Request $request){
+
         if($request->ifToDestroyTemporaryQuestions == 1){//when user leaves Test page, we need to destroy temporary testing questions to prevent fraud
             $testingSessionId = TestingSession::where('session_hash', $request->testingSessionHash)->pluck('id')->first();
             $this->testResult->removeEmptyResult($testingSessionId);
@@ -226,6 +243,19 @@ class ReactController extends Controller
 
         if($request->answerId != null){//it means that we came here with answer
             $correct = Answer::where('id', $request->answerId)->first()->correct;
+            if($correct == 0){
+                $token = $request->header('JWToken');
+                $parseResult = ParseJWToken::doParse($token);
+                $userId = $parseResult['user_id'];
+                if($userId != 4){// id 4 is anonym
+                    $questionId = Answer::where('id', $request->answerId)->pluck('question_id')->first();
+                    $mistake = new Mistakes;
+                    $mistake->question_id = $questionId;
+                    $mistake->user_id = $userId;
+                    $mistake->save();
+                }
+            }
+
             if($request->testingSessionHash == null){
                 return response()->json(['payload'=>['success'=>'false', 'message'=>'Testing session is unknown']]);
             };
@@ -356,8 +386,9 @@ class ReactController extends Controller
             $file = '/home/peter/blog/storage/logs/my.txt';
             $current = file_get_contents($file);
             $current .= $e->getMessage()."\n";
-            */
             file_put_contents($file, $current);
+            */
+
             return response()->json(['payload'=>['success'=>'false']]);
         }
         return response()->json(['payload'=>['success'=>'true']]);

@@ -42,15 +42,12 @@ Route::get('/contribution', function () {    return redirect('/app');});
 Route::get('/verifyemailaddress/{token?}', 'ServiceController@verifyemail');
 Route::get('/passwordreset/{token?}', 'ServiceController@passwordreset');
 
-//react part of application starts
+//react related public api starts
 Route::get('/app','SpaController@index')->name('reacthome');
 Route::get('/app/login','SpaController@index');
 Route::get('/app/register','SpaController@index');
 Route::get('/app/test','SpaController@index');
 Route::get('/app/users','SpaController@index');
-//react part of application ends
-
-//react related public api starts
 Route::get('/react/removezeroansweredtestingresults34563456sdfgs','ReactController@removezeroansweredtestingresults');//one time script temporary route to remove garbage reults when answered questions = zero
 Route::get('/react/getglobalsettings','ReactController@getglobalsettings');
 Route::get('/react/subjects','ReactController@getsubjectsuser');
@@ -64,6 +61,7 @@ Route::post('/react/resetpassword','ReactController@resetpassword');
 Route::get('/react/htmlentitiesconvertor3456346','ReactController@htmlentitiesconvertor');// one time script to convert all &gt;.... shit into > or < ......
 //react related user api starts
 Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
+    Route::get('/react/mistakes','ReactController@getmistakes');
     Route::get('/react/results','ReactController@getresults');
     Route::get('/react/emailconfirm/{id}','ReactController@getresults');
     Route::get('/react/cookieconsent/{id}','ReactController@cookieconsent');

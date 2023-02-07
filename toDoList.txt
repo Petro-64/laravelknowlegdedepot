@@ -87,7 +87,7 @@
 96) ///To think about transforming code into image to pevent cheating (say, using console or copy-paste code into editor), ////or at least, to make it unsellectable
 97) ///need to hide none-react part of app.
 98) ///when admin - edit questions, pagination numbers aren't centered within rectangle
-99) Add "My mistakenly answered quesions", kinda "Rabota nad oshibkami..."
+99) When add new subject with existinf name, system log admin out.... (need just to show message)
 100) Add "Get email notification when new question added" functionality
 101) ////Need to increase question length on Laravel "Add question" page to 500 characters
 102) //When we are on question edit page, there is a feature when you mouse over question, answers are shown. We need to position this answers popup so it wouldn't overlapped with question.
@@ -103,17 +103,20 @@
 107) ////Need to hide the rest of Laravel rotes like /tests etc.
 108) Registartion confirmation letter user recieves from petro@know....., better would be from admin@
 109) When resending registration confirmation link, need to provide some feedback kinda popup "thanks, link resent...."
-110) For some reson can't change registration email template, it's already updated on server but still sends old version. Server restarted and cache is cleared... ;-(.  
+110) For some reason can't change registration email template, it's already updated on server but still sends old version. Server restarted and cache is cleared... ;-(.  
    New version is simpler and removed confusing link..
 111) ///When test is finished, it would be good to give users choice -  2 buttons "New test" or "Results"
 112) To have "DB dump" functionality
 113) Admin - need to have a comments viewer
 114) Admmin - question reports viewer
 115) Admin - results per user viewer
-116) !!!!!!!!!!!!!!! priority !!!!!!!!   Admin - search question by word(s)
+116) ////Admin - search question by word(s)
 117) To add some unit tests
-118) React Admin Add Question Page to fix....
+118) ////React Admin Add Question Page to fix....
 119) ////Can't delete question from Edit Question page
 120) ////Need to separate Subj_id for editing questions and subj_id for adding questions, because there is a bad influence. when leave addQuestion page, subj_id and questions set now is being reset
 121) Need to add rate limiter for failed login attempts
-122) When add new subject with existinf name, system log admin out.... (need just to show message)
+122) !! next priority  ----  Add "My mistakenly answered quesions", kinda "Rabota nad oshibkami..."  "My mistakes"
+123) //// fixed//// BUG!!!! when logged in user do testing, then stays on testing page and logs out from top right menu, screen gets blank and error in console
+124) Put react hooks questions to the system 
+125) In react part all URL needs to be moved to separate module to be able later to separate all react php controllers into several files - main react php cotroller grows too big...
