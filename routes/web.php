@@ -111,6 +111,12 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
 }); 
 //react related public api ends
 
+//angular related public api start
+Route::get('/angular/getsubjectsuser','AngularController@getsubjectsuser');
+Route::get('/angular/results','AngularController@getresults');
+Route::post('/angular/login','AngularController@login');
+//angular related public api ends
+
 
 Route::group(['middleware' => ['auth']], function(){
     Route::group(['middleware' => ['admin']], function(){
