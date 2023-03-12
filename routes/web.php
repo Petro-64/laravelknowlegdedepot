@@ -113,8 +113,10 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
 
 //angular related public api start
 Route::get('/angular/getsubjectsuser','AngularController@getsubjectsuser');
-Route::get('/angular/results','AngularController@getresults');
 Route::post('/angular/login','AngularController@login');
+Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
+    Route::get('/angular/results','AngularController@getresults');
+}); 
 //angular related public api ends
 
 
