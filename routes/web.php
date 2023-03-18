@@ -116,6 +116,9 @@ Route::get('/angular/getsubjectsuser','AngularController@getsubjectsuser');
 Route::post('/angular/login','AngularController@login');
 Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
     Route::get('/angular/results','AngularController@getresults');
+    Route::group(['middleware' => ['ifJwTokenAdmin']], function(){
+        Route::get('/angular/mysqldump','AngularController@mysqldump');
+    });
 }); 
 //angular related public api ends
 

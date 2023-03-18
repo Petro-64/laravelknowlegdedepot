@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response as FacadeResponse;
 use App\Subject;
 use App\Question;
 use App\QuestionContribution;
@@ -33,7 +34,6 @@ use App\Jobs\SendPasswordResetEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use App\Mistakes;
-
 
 class AngularController extends Controller
 {
@@ -86,6 +86,43 @@ class AngularController extends Controller
         }
     }
 
+    public function mysqldump(){
+        //$command = "mysqldump travel_list > /home/petro/logs/dump.sql";
+        /*
+        $file = '/home/peter/blog/storage/logs/my.txt';
+        $current = file_get_contents($file);
+        $current .= $e->getMessage()."\n";
+        file_put_contents($file, $current);
+
+        finally done manually
+
+        ssh into srever; ssh rabbit@138.197.132.107
+
+        pw: B11
+
+        cd /home/rabbit
+
+        command: mysqldump -u root -p travel_list > dump.sql
+
+        pw: same;
+
+        dump is updated....
+
+        go back to VBox
+
+        execute this: scp rabbit@138.197.132.107:/home/rabbit/dump.sql /home/petro/Desktop/dump/dump.sql
+
+        or other file name....
+
+        done 17.03.23
+
+        */
+        //DB::statement($command);
+        $contents = "Hello11";
+        $response = FacadeResponse::make($contents, 200);
+        return $response;
+    }
+
     public function getresults(Request $request){
         $parseResult = ParseJWToken::doParse($request->header('JWToken'));/// we need this to retrieve user id
         $this->testResult->removeAllEmptyResults();
@@ -99,6 +136,6 @@ class AngularController extends Controller
         ->get();
         //$this->memcache->set($resultsKeyName, $testingResults, self::memcachedTimeout);
         return response()->json(['results' => $testingResults]);
-        //return $this->userMemcachedModels->getResults($requ
+        //return $this->userMemcachedModels->getResults($request);
     }
 }

@@ -44,5 +44,7 @@ class VerifyCsrfToken extends Middleware
         '/angular/getsubjectsuser',
         '/angular/login',
         '/angular/results',
+        '/angular/mysqldump',
+
     ];
 }
