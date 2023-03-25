@@ -12,7 +12,7 @@
         <link type="text/css" href="<?php echo e(asset('static/css/main.0006455e.chunk.css')); ?>" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <style>
+<style>
 @charset  "UTF-8";
 @import  url(https://fonts.googleapis.com/css?family=Nunito);
 
@@ -10954,8 +10954,8 @@ a.text-dark:focus {
         <div id="app">
             <?php echo $__env->yieldContent('content'); ?>
         </div>
-        <script src="<?php echo e(asset('static/js/2.8bac86f5.chunk.js')); ?>"></script>
-        <script src="<?php echo e(asset('static/js/main.43526841.chunk.js')); ?>"></script>
+        <script src="<?php echo e(asset('static/js/2.4d2aec6a.chunk.js')); ?>"></script>
+        <script src="<?php echo e(asset('static/js/main.a891d96b.chunk.js')); ?>"></script>
         <script src="<?php echo e(asset('static/js/runtime-main.27fa4a51.js')); ?>"></script>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
