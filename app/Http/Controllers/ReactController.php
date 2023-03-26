@@ -380,6 +380,16 @@ class ReactController extends Controller
                 Answer::where('question_id', $id)->delete();
                 QuestionReport::where('question_id', $id)->delete();
                 Question::where('id',$id)->delete();
+                $subjects = Subject::orderBy('created_at', 'asc')->get();
+                foreach ($subjects as $subject) {
+                    $subjId = $subject->id;
+                    $count = Question::where('subject_id','=', $subjId)->count();
+        
+                    $subject = Subject::find($subjId);
+                    $subject->questions_number = $count;
+                    $subject->save();
+                }
+
             });
         } catch (\Exception $e) {
             /*

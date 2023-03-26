@@ -120,3 +120,4 @@
 123) //// fixed//// BUG!!!! when logged in user do testing, then stays on testing page and logs out from top right menu, screen gets blank and error in console
 124) Put react hooks questions to the system 
 125) In react part all URL needs to be moved to separate module to be able later to separate all react php controllers into several files - main react php cotroller grows too big...
+126) ///fixed/// 23/03/23 when only one question exists for given subject, and this question deleted successfully, subjects table still shows one question and it's impossible to delete it
