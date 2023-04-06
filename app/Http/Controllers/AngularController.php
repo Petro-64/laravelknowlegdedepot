@@ -82,7 +82,8 @@ class AngularController extends Controller
             $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
             return response()->json(['success'=>'true', 'id'=>$thisUser->id, 'name'=>$thisUser->name, 'suspension_reason'=>$thisUser->suspension_reason, 'role_id'=>$roleId, 'cookie_consent_given'=>$thisUser->cooklie_consent_given, 'jwt_token'=>$jwt]);
         } else {
-            return response()->json(['data'=>['success'=>'false', 'message'=>'Wrong email or password']]);
+            //return response()->json(['data'=>['success'=>'false', 'message'=>'Wrong email or password']]);
+            return response()->json(      [                 'api_status' => '401',                'message' => 'UnAuthenticated',          ], 401);
         }
     }
 

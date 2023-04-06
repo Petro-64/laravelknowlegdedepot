@@ -116,8 +116,12 @@
 119) ////Can't delete question from Edit Question page
 120) ////Need to separate Subj_id for editing questions and subj_id for adding questions, because there is a bad influence. when leave addQuestion page, subj_id and questions set now is being reset
 121) Need to add rate limiter for failed login attempts
-122) !! next priority  ----  Add "My mistakenly answered quesions", kinda "Rabota nad oshibkami..."  "My mistakes"
+122) //// Add "My mistakenly answered quesions", kinda "Rabota nad oshibkami..."  "My mistakes" done
 123) //// fixed//// BUG!!!! when logged in user do testing, then stays on testing page and logs out from top right menu, screen gets blank and error in console
 124) Put react hooks questions to the system 
 125) In react part all URL needs to be moved to separate module to be able later to separate all react php controllers into several files - main react php cotroller grows too big...
 126) ///fixed/// 23/03/23 when only one question exists for given subject, and this question deleted successfully, subjects table still shows one question and it's impossible to delete it
+127) //// On mistakes page need to have question id to be able to check and fix it
+128) /// Label "Нажмите, чтобы выбрать предмет" invisible on mistakes filter dropdown on "Mistakes" page, fixed by resetting subject to none for mistakes page
+129) ///Label "Нажмите, чтобы выбрать предмет" invisible on contribution filter dropdown on "Contribution" page, fixed by resetting subject to none for mistakes page
+130) Admin contribution page broken functionality, no way to approve / decline
