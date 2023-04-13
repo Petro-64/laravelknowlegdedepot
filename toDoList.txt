@@ -111,7 +111,7 @@
 114) Admmin - question reports viewer
 115) Admin - results per user viewer
 116) ////Admin - search question by word(s)
-117) To add some unit tests
+117) ///To add some unit tests
 118) ////React Admin Add Question Page to fix....
 119) ////Can't delete question from Edit Question page
 120) ////Need to separate Subj_id for editing questions and subj_id for adding questions, because there is a bad influence. when leave addQuestion page, subj_id and questions set now is being reset
@@ -124,4 +124,7 @@
 127) //// On mistakes page need to have question id to be able to check and fix it
 128) /// Label "Нажмите, чтобы выбрать предмет" invisible on mistakes filter dropdown on "Mistakes" page, fixed by resetting subject to none for mistakes page
 129) ///Label "Нажмите, чтобы выбрать предмет" invisible on contribution filter dropdown on "Contribution" page, fixed by resetting subject to none for mistakes page
-130) Admin contribution page broken functionality, no way to approve / decline
+130) ///Admin contribution page broken functionality, no way to approve / decline
+131) ///Type ahead functionality to add on admin - search for question page
+132) In admin contriibution add functinality to hide all questions but pending
+133) Gradual downloading of the long lists ("infinite scroll")
