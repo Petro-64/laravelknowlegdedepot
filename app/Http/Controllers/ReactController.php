@@ -33,6 +33,8 @@ use App\Jobs\SendPasswordResetEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use App\Mistakes;
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version1X;
 
 
 class ReactController extends Controller
@@ -367,10 +369,32 @@ class ReactController extends Controller
 
     public function deletesubjects($id){
         $subject = Subject::find($id);
-        if($subject->questions_number > 0){
-            return response()->json(['payload'=>['success'=>'false', 'message'=>'Can\'t delete this subject, already questions added to it']]);
-        }
         Subject::findOrFail($id)->delete();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+    public function deletemistake($id, $uid){
+        //Mistakes::findOrFail($id)->delete();
+        Mistakes::where('question_id',$id)->where('user_id',$uid)->delete();
+        //DB::table('mistakes')->where('mistakes.user_id', '=', $uid)->where('mistakes.user_id', '=', $uid)->delete();
+        return response()->json(['payload'=>['success'=>'true']]);
+    }
+
+    public function postdeletemistake(Request $request){
+        $validator = Validator::make($request->all(), [
+            'questionId' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Not all fields are sent, some missing']]);
+        };
+        $token = $request->header('JWToken');
+        $parseResult = ParseJWToken::doParse($token);
+        $userId = $parseResult['user_id'];
+        if (!$userId) {
+            return response()->json(['payload'=>['success'=>'false', 'message'=>'Can\'t detect user']]);
+        };
+
+        Mistakes::where('question_id',$request->questionId)->where('user_id',$userId)->delete();
         return response()->json(['payload'=>['success'=>'true']]);
     }
 
@@ -483,6 +507,13 @@ class ReactController extends Controller
         $subject->active = 1;
         $subject->questions_number = 0;
         $subject->save();
+
+        $version = new Version1X("ws://localhost:3001");
+        $client = new Client($version, NULL, 1, false, true, true);
+        $client->initialize();
+        //$client->emit("new_subject", ["test"=>"test"]);
+        //$client->close();
+
         return response()->json(['payload'=>['success'=>'true']]);
     }
 

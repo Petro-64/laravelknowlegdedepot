@@ -66,6 +66,8 @@ Route::group(['middleware' => ['ifJwTokenRoleExists']], function(){
     Route::get('/react/emailconfirm/{id}','ReactController@getresults');
     Route::get('/react/cookieconsent/{id}','ReactController@cookieconsent');
     Route::post('/react/changepassword','ReactController@changepassword');
+    Route::delete('/react/deletemistake/{id}/{uid}','ReactController@deletemistake');
+    Route::post('/react/postdeletemistake','ReactController@postdeletemistake');
         Route::group(['middleware' => ['CheckContributionRateLimiter']], function(){
             Route::post('/react/addmycontribution','ReactController@addmycontribution');
         });

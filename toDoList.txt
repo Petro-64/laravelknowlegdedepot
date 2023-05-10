@@ -127,4 +127,10 @@
 130) ///Admin contribution page broken functionality, no way to approve / decline
 131) ///Type ahead functionality to add on admin - search for question page
 132) In admin contriibution add functinality to hide all questions but pending
-133) Gradual downloading of the long lists ("infinite scroll")
+133) Delete question returns false from admin - edit questions, can't delete question
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+select * from travel_list.shop_users where age > 5;

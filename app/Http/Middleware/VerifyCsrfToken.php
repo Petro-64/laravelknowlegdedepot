@@ -19,6 +19,8 @@ class VerifyCsrfToken extends Middleware
         '/react/deletesubjects/*',
         '/react/deleteusers/*',
         '/react/deletequestion/*',
+        '/react/deletemistake/*/*',
+        '/react/postdeletemistake',
         '/react/signup',
         '/react/testing',
         '/react/startTesting',
@@ -45,6 +47,5 @@ class VerifyCsrfToken extends Middleware
         '/angular/login',
         '/angular/results',
         '/angular/mysqldump',
-
     ];
 }
