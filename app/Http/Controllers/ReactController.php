@@ -57,7 +57,6 @@ class ReactController extends Controller
 
     public function getsubjectsuser(){
         //$subjects = Subject::where('active', 1)->where('questions_number', '!=', 0)->orderBy('created_at', 'asc')->get(); 
- 
           $subjects = DB::table('subjects')
         ->leftjoin('questions', 'questions.subject_id', '=', 'subjects.id')
         ->select(DB::raw('subjects.id as id, subjects.name as name, subjects.active as active, subjects.created_at as created_at, subjects.updated_at as updated_at, COUNT(subjects.name) as questions_number'))
@@ -508,9 +507,11 @@ class ReactController extends Controller
         $subject->questions_number = 0;
         $subject->save();
 
-        $version = new Version1X("ws://localhost:3001");
-        $client = new Client($version, NULL, 1, false, true, true);
-        $client->initialize();
+        sleep(5);
+
+        // $version = new Version1X("ws://localhost:3001");
+        // $client = new Client($version, NULL, 1, false, true, true);
+        // $client->initialize();
         //$client->emit("new_subject", ["test"=>"test"]);
         //$client->close();
 
